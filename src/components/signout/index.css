@@ -1,0 +1,142 @@
+.signoutContainer{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.signoutContent{
+  top: 61px;
+  left: 237px;
+  width: 100%;
+  max-width: 270px;
+  background-color: white;
+  overflow: auto;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 22%), 0 0 0 rgb(0 0 0 / 15%);
+}
+
+.img-button{
+  padding: 20px;
+}
+
+.post-btn button:disabled {
+  background-color: #ccc; 
+  color: #666; 
+  cursor: not-allowed; 
+}
+.close{
+  position: fixed;
+  color: #666;
+  display: flex;
+  width: 100%;
+  max-width: 707px;
+  padding: 9px;
+  justify-content: end;
+  background-color: unset;
+}
+.close >svg{
+  font-size: 30px;
+  font-weight: 200; 
+  cursor: pointer;
+}
+
+.view-profile{
+  display: flex;
+  margin: 10px;
+  justify-content: flex-end;
+}
+
+.view-profile button{
+  width: 268px;
+  height: 23px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 18px;
+  border-color: var(--linkedinBlue2);
+  outline: auto;
+  border: none;
+  font-family: system-ui;
+  font-weight: 600;
+  background-color: #ffffff ;
+  color: var(--linkedinBlue2);
+}
+
+
+.header{
+  display: block;
+  padding: 16px 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0,0.6);
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+
+}
+
+.header textarea {
+  font-size: 20px;
+  border: none;      
+  outline: none;      
+  padding: 0;        
+  margin: 0;          
+  resize: none;      
+  width: 100%;       
+  height: 150px; 
+}
+
+.signoutBoxProfile{
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.signoutBoxProfile>span {
+  width: 100%;
+}
+.signoutBoxProfile>div {
+  flex-direction: column;
+  font-size: 18px;
+}
+.nav__content_people>div>svg{
+  padding-left: 11px;
+  color: rgb(105, 103, 103);
+}
+.nav__content_people>span{
+  font-size: 12px;
+}
+.account{
+  border-top: 0.1px solid #e2e9df;
+  color: #958b7b;
+}
+.account div:first-child{
+  color: black;
+}
+.account div{
+  margin: 12px;
+}
+
+.manage{
+  border-top: 0.1px solid #e2e9df;
+  color: #958b7b;
+}
+.sgnout{
+  border-top: 0.1px solid #e2e9df;
+  color: #958b7b;
+  padding: 12px;
+  cursor: pointer;
+}
+.manage div:first-child{
+  color: black;
+}
+.manage div{
+  margin: 12px;
+}

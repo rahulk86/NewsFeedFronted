@@ -1,0 +1,176 @@
+/* Container */
+.leftside {
+    width: 100%;
+    max-width: 290px;
+  }
+  
+  /* ArtCard */
+  .leftside .art-card {
+    text-align: center;
+    overflow: hidden;
+    margin-left: 68px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: box-shadow 83ms;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
+  }
+  
+  /* UserInfo */
+  .leftside .user-info {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 12px 12px 16px;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* CardBackground */
+  .leftside .card-background {
+    background: url("/images/card-bg.svg");
+    background-position: center;
+    background-size: 462px;
+    height: 54px;
+    margin: -12px -12px 0;
+  }
+  
+  /* Photo */
+  .leftside .photo {
+    box-shadow: none;
+    width: 72px;
+    height: 72px;
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-color: white;
+    background-position: center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    border: 2px solid white;
+    margin: -38px auto 12px;
+    border-radius: 50%;
+    overflow: hidden;
+    >img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+  }
+  
+  /* Link */
+  .leftside .link {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 600;
+  }
+  
+  /* AddPhotoText */
+  .leftside .add-photo-text {
+    color: #0a66c2;
+    margin-top: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    line-height: 1.33;
+    font-weight: 400;
+  }
+  
+  /* Widget */
+  .leftside .widget {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .leftside .widget > a {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 12px;
+  }
+  
+  .leftside .widget > a:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+  
+  .leftside .widget > a > div {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .leftside .widget > a > div span {
+    font-size: 12px;
+    line-height: 1.333;
+  }
+  
+  .leftside .widget > a > div span:first-child {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .leftside .widget > a > div span:nth-child(2) {
+    color: rgba(0, 0, 0, 1);
+  }
+  
+  .leftside .widget img {
+    color: rgba(0, 0, 0, 1);
+  }
+  
+  /* Item */
+  .leftside .item {
+    border-color: rgba(0, 0, 0, 0.8);
+    text-align: left;
+    padding: 12px;
+    font-size: 12px;
+    display: block;
+  }
+  
+  .leftside .item span {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 1);
+  }
+  
+  .leftside .item span img {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .leftside .item:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+  
+  /* CommunityCard */
+  .leftside .community-card {
+    padding: 8px 0 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .leftside .community-card a {
+    color: black;
+    padding: 4px 12px 4px 12px;
+    font-size: 12px;
+  }
+  
+  .leftside .community-card a:hover {
+    color: #0a66c2;
+  }
+  
+  .leftside .community-card a span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .leftside .community-card a:last-child {
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    border-top: 1px solid #d6cec2;
+    padding: 12px;
+  }
+  
+  .leftside .community-card a:last-child:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+  
