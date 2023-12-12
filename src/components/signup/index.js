@@ -1,9 +1,24 @@
 import React, { useRef,useState ,useEffect} from 'react';
 import  * as userAuth from "../../AUth/NewFeedAPI/UserAuth";
-import {Link, useNavigate,useLocation } from "react-router-dom";
-import "../signin/index.css";
-import styled from "styled-components";
-import "./index.css";
+import { useNavigate,useLocation } from "react-router-dom";
+import {Container,
+        Content,
+        Nav,
+        NavBoady,
+        NavImage,
+        Auth2OContainer,
+        AuthInputs,
+        AuthInputsLabel,
+        CommonInput,
+        Errmsg,
+        Form,
+        FormButton,
+        FormInner,
+        HrText,
+        Navigate,
+        NavigateLink
+       }                                  from "../signin";
+import styled ,{ css }  from "styled-components";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -11,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const USER_EMAILORPHONE_REGEX = /^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|(?:\+?\d{1,4}[-.\s]?\d{1,15}))$/;
 const PASSWORD_REGEX = /^.{6,}$/;
 
-function Signup() {
+function Signup(props) {
   const userRef                                     = useRef();
   const errRef                                      = useRef();
   const [emailOrPhone, setEmailOrPhone]             = useState('');
@@ -88,124 +103,217 @@ function Signup() {
 
   return (
   <Container>
-    <nav 
-        className="nav" >
-        <a href="/">
-          <img src="/images/login-logo.svg" alt=""/>
-        </a>
-    </nav>
-    <h1 className='main__subtitle'>Make the most of your professional life</h1>
-    <div className='card-layout'>
-    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>          
-      <form className="login__form" onSubmit={handleSubmit} >
-          <div className='login-wrapper-inner'>
-            <div className="auth-inputs">
-              <babel htmlFor="username" className='labelForValidation'>
-                  <FontAwesomeIcon icon={faCheck} className={validEmailOrPhone ? "valid" : "hide"} />
-                  <FontAwesomeIcon icon={faTimes} className={validEmailOrPhone || !emailOrPhone ? "hide" : "invalid"} />
-              </babel>
+    <Nav>
+      <NavBoady>
+        <NavImage src="/images/login-logo.svg" alt=""/>
+      </NavBoady>
+    </Nav>
 
-              <input
-                      onChange={(e) => setEmailOrPhone(e.target.value)}
-                      type="email"
-                      ref={userRef}
-                      aria-invalid={validEmailOrPhone ? "false" : "true"}
-                      aria-describedby="uidnote"
-                      className="common-input"
-                      placeholder="Email or phone number"
-                      id="email" 
-                      value={emailOrPhone || ""}
-                      onFocus={() => setEmailOrPhoneFocus(true)}
-                      onBlur={() => setEmailOrPhoneFocus(false)}
+    <BigMedidaSubtitle>Make the most of your professional life</BigMedidaSubtitle>
+    <SmallMedidaSubtitle>Join Linkdin Now - it's free!</SmallMedidaSubtitle>
+    <Content>
+    <Errmsg ref={errRef} enable={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
+      <Form onSubmit={handleSubmit} >
+          <FormInner>
+            <AuthInputs>
+              <LabelForValidation>
+                <ValidInput icon={faCheck} enabled={validEmailOrPhone} />
+                <InValidInput icon={faTimes} enabled={!validEmailOrPhone && emailOrPhone} />
+              </LabelForValidation>
+
+              <CommonInput
+                  onChange={(e) => setEmailOrPhone(e.target.value)}
+                  type="email"
+                  ref={userRef}
+                  aria-invalid={validEmailOrPhone ? "false" : "true"}
+                  aria-describedby="uidnote"
+                  placeholder="Email or phone number"
+                  id="email" 
+                  value={emailOrPhone || ""}
+                  onFocus={() => setEmailOrPhoneFocus(true)}
+                  onBlur={() => setEmailOrPhoneFocus(false)}
               />
-              <babel htmlFor="username" className={ emailOrPhone&& emailOrPhone.length>0 ? "labelForInput" : "hide"}>
-                  Email or phone number
-              </babel>
-               <p id="uidnote" className={emailOrPhoneFocus && emailOrPhone && !validEmailOrPhone ? "instructions" : "offscreen"}>
-                          <FontAwesomeIcon icon={faInfoCircle} />
-                            4 to 24 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
-              </p>
-            </div>
 
-            <div className="auth-inputs">
-              <babel htmlFor="username" className='labelForValidation'>
-                  <FontAwesomeIcon icon={faCheck} className={validPassword ? "valid" : "hide"} />
-                  <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? "hide" : "invalid"} />
-              </babel>
-              <input
+              <AuthInputsLabel enabled={ emailOrPhone&& emailOrPhone.length>0}>
+                  Email or phone number
+              </AuthInputsLabel>
+
+              <Instructions id="uidnote"  isInstructions={emailOrPhoneFocus && emailOrPhone && !validEmailOrPhone }>  
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                      4 to 24 characters.<br />
+                      Must begin with a letter.<br />
+                      Letters, numbers, underscores, hyphens allowed.
+              </Instructions>
+
+            </AuthInputs>
+
+            <AuthInputs>
+              <LabelForValidation>
+                <ValidInput icon={faCheck} enabled={validPassword} />
+                <InValidInput icon={faTimes} enabled={!validPassword && password } />
+              </LabelForValidation>
+
+              <CommonInput
                     id="password"
                     value={password || ""}
                     onChange={(e) => setPassword(e.target.value)} 
                     aria-invalid={validPassword ? "false" : "true"}
                     aria-describedby="pwdnote"
                     type="password"
-                    className="common-input"
                     placeholder="Password (6+ characters)"
                     onFocus={() => setPasswordFocus(true)}
                     onBlur={() => setPasswordFocus(false)}
               />
-              <babel htmlFor="username" className={ password&& password.length>0 ? "labelForInput" : "hide"}>
-                Password (6+ characters)
-              </babel>
-               <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            8 to 24 characters.<br />
-                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                </p>
-            </div>
 
-            <div className="auth-inputs">
-              <babel htmlFor="username" className='labelForValidation'>
-                  <FontAwesomeIcon icon={faCheck} className={validMatchPassword&&matchPassword ? "valid" : "hide"} />
-                  <FontAwesomeIcon icon={faTimes} className={validMatchPassword || !matchPassword ? "hide" : "invalid"} />
-              </babel>
-              <input
+              <AuthInputsLabel enabled={ password&& password.length>0}>
+                Password (6+ characters)
+              </AuthInputsLabel>
+
+              <Instructions isInstructions={passwordFocus && !validPassword }>
+                 <FontAwesomeIcon icon={faInfoCircle} />
+                  8 to 24 characters.<br />
+                  Must include uppercase and lowercase letters, a number and a special character.<br />
+                  Allowed special characters: 
+                    <span aria-label="exclamation mark">!</span> 
+                    <span aria-label="at symbol">@</span> 
+                    <span aria-label="hashtag">#</span> 
+                    <span aria-label="dollar sign">$</span> 
+                    <span aria-label="percent">%</span>
+              </Instructions>
+
+            </AuthInputs>
+
+            <AuthInputs>
+              <LabelForValidation>
+                  <ValidInput icon={faCheck} enabled={validMatchPassword&&matchPassword} />
+                  <InValidInput icon={faTimes} enabled={!validMatchPassword && matchPassword }/>
+              </LabelForValidation>
+
+              <CommonInput
                     id="ConfirmPassword"
                     value={matchPassword || ""}
                     onChange={(e) => setMatcPassword(e.target.value)} 
                     aria-invalid={validMatchPassword ? "false" : "true"}
                     aria-describedby="pwdnote"
                     type="password"
-                    className="common-input"
                     placeholder="Conform Password"
                     onFocus={() => setMatchPasswordFocus(true)}
                     onBlur={() => setMatchPasswordFocus(false)}
               />
-              <babel htmlFor="username" className={ matchPassword&& matchPassword.length>0 ? "labelForInput" : "hide"}>
+
+              <AuthInputsLabel enable={ matchPassword&& matchPassword.length>0 }>
                 Conform Password
-              </babel>
-              <p id="confirmnote" className={ matchPassword&& !validMatchPassword ? "instructions" : "offscreen"}>
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        Must match the first password input field.
-              </p>
-            </div>
+              </AuthInputsLabel>
 
-            <div className="login__form_action_container">
-                <button disabled={!validEmailOrPhone || !validPassword || !validMatchPassword ? true : false} className="login-btn">Agrre & join </button>
-            </div>
+              <Instructions id="uidnote" isInstructions={matchPassword&& !validMatchPassword}>    
+                <FontAwesomeIcon icon={faInfoCircle} />
+                Must match the first password input field.
+              </Instructions> 
 
-          </div>
-      </form>
+            </AuthInputs>
+
+            <FormButton 
+                disabled={!validEmailOrPhone || !validPassword || !validMatchPassword }
+              >
+                Agrre & join
+            </FormButton>
+
+          </FormInner>
+      </Form>
       
-      <hr className="hr-text" data-content="or" />
-        <div className="google-btn-container">
-          <p className="go-to-signup">
-            Already on LinkedIn?{" "}
-          <Link  className="join-now" to="/signIn">Sign in</Link>
-          </p>
-        </div>
-    </div>
+      <HrText data-content="or" />
+
+      <Auth2OContainer>
+        <Navigate>
+          Already on LinkedIn?{" "}
+          <NavigateLink to="/signIn">Sign in</NavigateLink>
+        </Navigate>
+      </Auth2OContainer>
+
+    </Content>
   </Container>
   );
 }
 
-const Container = styled.div`
-  max-width: 100%;
-  height: 100%;
-  background: #f5f5f5;
+
+export const BigMedidaSubtitle = styled.h1`
+  text-align: center !important;
+  padding-left: 16px !important;
+  padding: 19px;
+  padding-right: 16px !important;
+  padding-top: 2px !important;
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+export const SmallMedidaSubtitle = styled.h2`
+  display: none;
+  @media (max-width: 900px) {
+    text-align: center!important;
+    display: flex;
+    justify-content: center;
+    padding: 12px 12px 0;
+    font-size: 21px;
+  }
+`;
+
+export const Instructions = styled.p`
+  ${(props) =>
+    props.isInstructions
+      ? css`
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+        background: #000;
+        color: #fff;
+        position: absolute;
+        bottom: 65%;
+        left: 101%;
+        width: 60%;
+        padding: 8px;
+        box-sizing: border-box;
+
+        @media (max-width: 900px) {
+          margin-left: -195px;
+          margin-bottom: 23px;
+          transform: translateX(-60%);
+        }
+        `
+      : css`
+          position: absolute;
+          left: -9999px;
+        `}
+`;
+
+const LabelForValidation =  styled.div`
+  position: absolute;
+  top: 50%;
+  right: 8px; /* Adjust the right offset as needed */
+  transform: translateY(-50%);
+`;
+const ValidInput = styled(FontAwesomeIcon)`
+    ${(props) =>
+      props.enabled
+        ? css`
+          color: limegreen;
+          margin-left: 0.25rem;
+          `
+        : css`
+            display: none;
+          `}
+`;
+
+const InValidInput = styled(FontAwesomeIcon)`
+    ${(props) =>
+      props.enabled
+        ? css`
+            color: red;
+            margin-left: 0.25rem;
+          `
+        : css`
+            display: none;
+          `
+      }
 `;
 
 export default Signup;

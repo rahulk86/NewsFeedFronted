@@ -1,4 +1,7 @@
-const baseURL               = "http://localhost:8086";
+// const baseURL               = "http://3.27.18.133:8086";
+// const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+const baseURL               = "http://192.168.29.228:8086";
+const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
 const login                 = "/api/users/login";
 const oauth2                = "/api/users/oauth2";
 const signout               = "/api/users/signout";
@@ -16,6 +19,9 @@ const allPost               = "/api/users/post/get";
 const vote                  = "/api/users/post/vote";
 const createReplyForReply   = "/api/users/post/comment/reply/reply/create";
 const allReplyReplies       = "/api/users/post/comment/reply/reply/get";
+const googleAuthUrl       = `${baseURL}/oauth2/authorize/google?redirect_uri=${Oauth2RedirectUri}`;
+const FaceBookAuthUrl     = `${baseURL}/oauth2/authorize/facebook?redirect_uri=${Oauth2RedirectUri}`;
+const GithubAuthUrl       = `${baseURL}/oauth2/authorize/github?redirect_uri=${Oauth2RedirectUri}`;
 
 export default {
     baseURL,
@@ -35,5 +41,8 @@ export default {
     allReplyReplies,
     createReplyForReply,
     vote,
-    createComment
+    createComment,
+    googleAuthUrl,
+    FaceBookAuthUrl,
+    GithubAuthUrl
   };

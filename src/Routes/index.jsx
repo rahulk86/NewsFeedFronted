@@ -21,7 +21,7 @@ const ROLES = {
 const RouterComponent = () => (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signUp" element={ <SignUp />} />
         <Route path="/register" element={ <SignupWithSecurityCheck />} />
         <Route path="/signIn" element={<SignIn />} />

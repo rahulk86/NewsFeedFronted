@@ -152,6 +152,7 @@ const UserProfile = styled.div`
   box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
   >img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {Link } from "react-router-dom";
-import { GOOGLE_AUTH_URL} from '../../AUth/NewFeedAPI/constants';
+import newFeedUrl from '../../AUth/NewFeedAPI/newFeedUrl';
 import "./index.css";
 
 const Home = (props) => {
@@ -21,7 +21,7 @@ const Home = (props) => {
         <img src="/images/login-hero.svg" alt="Login Hero" />
       </div>
       <div class="form">
-        <a class="google" href={GOOGLE_AUTH_URL} >
+        <a class="google" href={newFeedUrl.googleAuthUrl} >
           <img src="/images/google.svg" alt="Google Logo" />
           Sign in with Google
         </a>

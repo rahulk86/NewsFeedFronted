@@ -1,11 +1,23 @@
 import React, { useRef,useState ,useEffect} from 'react';
 import  * as userAuth from "../../AUth/NewFeedAPI/UserAuth";
-import {Link,useLocation} from "react-router-dom";
-import "../signin/index.css";
-import styled from "styled-components";
-import "./index.css";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {useLocation} from "react-router-dom";
+import {  Container,
+          Content,
+          Nav,
+          NavBoady,
+          NavImage,
+          AuthInputs,
+          AuthInputsLabel,
+          CommonInput,
+          Errmsg,
+          Form,
+          FormButton,
+          FormInner
+        }                                  from "../signin";
+import {  BigMedidaSubtitle,
+          SmallMedidaSubtitle,
+          Instructions
+        }                                  from "../signup";
 
 function SignupWithSecurityCheck() {
   const userRef                      = useRef();
@@ -47,63 +59,51 @@ function SignupWithSecurityCheck() {
 
   return (
   <Container>
-    <nav 
-        className="nav" >
-        <a href="/">
-          <img src="/images/login-logo.svg" alt=""/>
-        </a>
-    </nav>
-    <h1 className='main__subtitle'>Make the most of your professional life</h1>
-    <div className='card-layout'>
-    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>          
-      <form className="login__form" onSubmit={handleSubmit} >
-          <div className='login-wrapper-inner'>
-            <div className="auth-inputs">
-              <input
-                      onChange={(e) => setFirstName(e.target.value)}
-                      type="name"
-                      ref={userRef}
-                      aria-describedby="uidnote"
-                      className="common-input"
-                      placeholder="First name"
-                      id="firstName" 
-                      value={firstName || ""}
-              />
-              <babel htmlFor="firstName" className={ firstName&& firstName.length>0 ? "labelForInput" : "hide"}>
-                  First name
-              </babel>
-            </div>
+    <Nav>
+      <NavBoady>
+        <NavImage src="/images/login-logo.svg" alt=""/>
+      </NavBoady>
+    </Nav>
+    <BigMedidaSubtitle>Make the most of your professional life</BigMedidaSubtitle>
+    <SmallMedidaSubtitle>Join Linkdin Now - it's free!</SmallMedidaSubtitle>
+    <Content>
+    <Errmsg ref={errRef} enable={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
+      <Form onSubmit={handleSubmit} >
+        <FormInner>
+          <AuthInputs>
+            <CommonInput
+              onChange={(e) => setFirstName(e.target.value)}
+              type="name"
+              ref={userRef}
+              aria-describedby="uidnote"
+              placeholder="First name"
+              id="firstName" 
+              value={firstName || ""}
+            />
+            <AuthInputsLabel enabled={ firstName&& firstName.length>0 }>
+                First name
+            </AuthInputsLabel>
+          </AuthInputs>
 
-            <div className="auth-inputs">
-              <input
-                    id="lastName"
-                    value={lastName || ""}
-                    onChange={(e) => setLastName(e.target.value)} 
-                    aria-describedby="pwdnote"
-                    type="name"
-                    className="common-input"
-                    placeholder="Last name"
-              />
-              <babel htmlFor="lastName" className={ lastName&& lastName.length>0 ? "labelForInput" : "hide"}>
-                Last name
-              </babel>
-            </div>
-
-            <div className="login__form_action_container">
-                <button  className="login-btn">Continue</button>
-            </div>
-
-          </div>
-      </form>
-    </div>
+          <AuthInputs>
+            <CommonInput
+              id="lastName"
+              value={lastName || ""}
+              onChange={(e) => setLastName(e.target.value)} 
+              aria-describedby="pwdnote"
+              type="name"
+              placeholder="Last name"
+            />
+            <AuthInputsLabel enabled={ lastName&& lastName.length>0}>
+              Last name
+            </AuthInputsLabel>
+          </AuthInputs>
+           <FormButton  className="login-btn">Continue</FormButton>
+        </FormInner>
+      </Form>
+    </Content>
   </Container>
   );
 }
-
-const Container = styled.div`
-  max-width: 100%;
-  height: 100%;
-  background: #f5f5f5;
-`;
 
 export default SignupWithSecurityCheck;

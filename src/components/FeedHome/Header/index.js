@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import  SignOut from "../../signout/index";
 import  ProfileImage from "../../ProfileImage";
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 
 const Header = ({profileData}) => {
 
@@ -36,42 +36,49 @@ const Header = ({profileData}) => {
         </Search>
         <Nav>
           <NavListWrap>
-            <NavList className="active">
+            <NavList className="active" isSmallMedia={true}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faHome} /> 
                 <span>Home</span>
               </NavListItem>
             </NavList>
 
-            <NavList>
+            <NavList isSmallMedia={true}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faPeopleGroup} /> 
                 <span>My Network</span>
               </NavListItem>
             </NavList>
 
-            <NavList>
+            <SmallMediaNavList isSmallMedia={true} >
+              <NavListItem>
+                <FontAwesomeIcon icon={fortawesome.faPlusSquare} /> 
+                <span>Post</span>
+              </NavListItem>
+            </SmallMediaNavList>
+
+            <NavList isSmallMedia={true}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faBriefcase} /> 
                 <span>Jobs</span>
               </NavListItem>
             </NavList>
 
-            <NavList>
+            <NavList isSmallMedia={false}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faMessage} /> 
                 <span>Messaging</span>
               </NavListItem>
             </NavList>
 
-            <NavList>
+            <NavList isSmallMedia={true}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faBell} /> 
                 <span>Notifications</span>
               </NavListItem>
             </NavList>
 
-            <NavList onClick={handleMeClick} >
+            <NavList onClick={handleMeClick} isSmallMedia={false} >
               <User>
                 <UserProfile>
                   <ProfileImage profileData={profileData} />
@@ -171,13 +178,14 @@ const Nav = styled.nav`
   display: block;
   width: 100%;
   max-width: 779px;
+  height: 100%;
   margin-top: 3px;
   @media (max-width: 768px) {
     position: fixed;
     left: 0;
+    max-height: 56px;
     bottom: 0;
     background: white;
-    width: 100%;
   }
 `;
 
@@ -185,7 +193,14 @@ const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
   list-style-type: none;
-
+  @media (max-width: 768px) {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+  }
   .active {
     span:after {
       content: "";
@@ -201,9 +216,35 @@ const NavListWrap = styled.ul`
   }
 `;
 
+const SmallMediaNavList = styled.li`
+  display: none;
+  align-items: center;
+  @media (max-width: 768px) {
+  ${(props) =>
+    props.isSmallMedia
+      ? css`
+         display: flex;
+        `
+      : css`
+       display: none;
+      `
+    }
+  }
+`;
+
 const NavList = styled.li`
   display: flex;
   align-items: center;
+  @media (max-width: 768px) {
+  ${(props) =>
+    props.isSmallMedia
+      ? css`
+        `
+      : css`
+       display: none;
+      `
+    }
+  }
 `;
 
 const NavListItem = styled.a`
@@ -223,16 +264,22 @@ const NavListItem = styled.a`
 
   svg {
     font-size: 20px;
+    @media (max-width: 768px) {
+     font-size: 14px;
+    }
   }
 
   span {
     display: flex;
     align-items: center;
+    @media (max-width: 768px) {
+     font-size: 8px;
+    }
     padding: 4px;
   }
 
   @media (max-width: 768px) {
-    min-width: 70px;
+    min-width: 56px;
   }
 
   &:hover,
