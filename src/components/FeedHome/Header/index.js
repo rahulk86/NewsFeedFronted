@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import  SignOut from "../../signout/index";
 import  ProfileImage from "../../ProfileImage";
+import NewPost from "../Posts/newPost";
 import styled,{css} from "styled-components";
 
-const Header = ({profileData}) => {
+const Header = ({profileData,setPostData}) => {
 
   const [showSignOut, setShowSignOut] = useState(false);
+  const [newPostPopup, setNewPostPopup] = useState(false);
 
   const handleMeClick = () => {
     setShowSignOut(!showSignOut);
@@ -21,11 +23,19 @@ const Header = ({profileData}) => {
   return (
     <Container>
       <Content>
+
         <Logo>
           <a href="/home">
             <img className="linkedin-logo" src={LinkedinLogo} alt="LinkedinLogo" />
           </a>
         </Logo>
+
+          <UserSmallMedia isSmallMedia={true}>
+            <UserProfile>
+              <ProfileImage profileData={profileData} />
+            </UserProfile>
+          </UserSmallMedia>
+
         <Search>
           <div>
             <input type="text" placeholder="Search" />
@@ -34,6 +44,14 @@ const Header = ({profileData}) => {
              <FontAwesomeIcon icon={fortawesome.faSearch} className="faSearch" />
           </SearchIcon>
         </Search>
+
+        <SmallMediaNavList isSmallMedia={true}>
+              <NavListItem>
+                <FontAwesomeIcon icon={fortawesome.faMessage} /> 
+                <span>Messaging</span>
+              </NavListItem>
+        </SmallMediaNavList>
+
         <Nav>
           <NavListWrap>
             <NavList className="active" isSmallMedia={true}>
@@ -50,7 +68,10 @@ const Header = ({profileData}) => {
               </NavListItem>
             </NavList>
 
-            <SmallMediaNavList isSmallMedia={true} >
+            <SmallMediaNavList 
+                isSmallMedia={true} 
+                onClick={()=>{setNewPostPopup(true)}}
+               >
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faPlusSquare} /> 
                 <span>Post</span>
@@ -90,6 +111,7 @@ const Header = ({profileData}) => {
               </User>
             </NavList>
 
+            <NavList isSmallMedia={false}>
             <Work>
               <a>
                 <img src="/images/nav-work.svg" alt="" />
@@ -99,10 +121,12 @@ const Header = ({profileData}) => {
                 </span>
               </a>
             </Work>
+            </NavList>
           </NavListWrap>
         </Nav>
       </Content>
       {showSignOut && <SignOut profileData = {profileData} handleCloseSignOut={handleCloseSignOut} />}
+      {newPostPopup && <NewPost funVal = {setNewPostPopup} profileData={profileData} setPostData = {setPostData} />}
     </Container>
   );
 };
@@ -116,6 +140,9 @@ const Container = styled.div`
   top: 0;
   width: 100vw;
   z-index: 100;
+  @media (max-width: 768px) {
+    padding: unset;
+  }
 `;
 
 const Content = styled.div`
@@ -124,11 +151,18 @@ const Content = styled.div`
   align-items: center;
   margin: 0 auto;
   max-width: 1180px;
+  @media (max-width: 768px) {
+    margin: 6px 0 0 -6px;
+    max-height: 65px;
+  }
 `;
 
 const Logo = styled.span`
   margin-right: 8px;
   font-size: 0px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Search = styled.div`
@@ -152,7 +186,13 @@ const Search = styled.div`
       border-color: #dce6f1;
       vertical-align: text-top;
     &:focus {
-      width: 320px; /* Set the width when the input is focused */
+      width: 320px; 
+      @media (max-width: 768px) {
+        width: 200px;
+      }
+    }
+    @media (max-width: 768px) {
+        width: 200px;
     }
 
     }
@@ -185,6 +225,7 @@ const Nav = styled.nav`
     left: 0;
     max-height: 56px;
     bottom: 0;
+    max-width: 559px;
     background: white;
   }
 `;
@@ -256,17 +297,13 @@ const NavListItem = styled.a`
   font-weight: 400;
   justify-content: center;
   line-height: 1.5;
-  min-height: 52px;
-  min-width: 80px;
+  min-width: 75px;
   color: rgba(0, 0, 0, 0.6);
   position: relative;
   text-decoration: none;
 
   svg {
     font-size: 20px;
-    @media (max-width: 768px) {
-     font-size: 14px;
-    }
   }
 
   span {
@@ -278,10 +315,6 @@ const NavListItem = styled.a`
     padding: 4px;
   }
 
-  @media (max-width: 768px) {
-    min-width: 56px;
-  }
-
   &:hover,
   &:active {
     color: rgba(0, 0, 0, 0.9);
@@ -290,8 +323,7 @@ const NavListItem = styled.a`
 `;
 
 const User = styled.a`
-
-align-items: center;
+  align-items: center;
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -334,6 +366,31 @@ align-items: center;
   }
 `;
 
+const UserSmallMedia = styled.a`
+  align-items: center;
+  background: transparent;
+  flex-direction: column;
+  display: none;
+  font-size: 12px;
+  font-weight: 400;
+  justify-content: center;
+  line-height: 3;
+  min-width: 56px;
+  position: relative;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  @media (max-width: 768px) {
+  ${(props) =>
+    props.isSmallMedia
+      ? css`
+         display: flex;
+        `
+      : css`
+      `
+    }
+  }
+`;
+
 const UserProfile = styled.div`
   margin: -5px;
   width: 30px;
@@ -349,6 +406,7 @@ const UserProfile = styled.div`
   box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
   >img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
   }
   >svg {

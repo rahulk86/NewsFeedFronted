@@ -3,6 +3,9 @@
     width: 100%;
     max-width: 301px;
     padding-right: 75px;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
   
   /* FollowCard */

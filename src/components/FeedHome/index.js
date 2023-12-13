@@ -50,7 +50,7 @@ const FeedHome = (props) => {
 
   return (
     <Container>
-      <Header profileData = {profileData} />
+      <Header profileData = {profileData} setPostData = {setPostData} />
       <Layout>
         <Leftside profileData={profileData} />
         {postData && <Posts profileData = {profileData} data={postData} setPostData = {setPostData} />}
@@ -72,7 +72,8 @@ const Layout = styled.div`
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    padding: 0 5px;
+    padding-top: 18%;
+    padding-bottom: 60px;
   }
 `;
 export default FeedHome;

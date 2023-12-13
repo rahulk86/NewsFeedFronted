@@ -218,7 +218,7 @@ const FooterIcon = styled.div`
       height: 33px;
       margin: 12px;
       cursor: pointer;
-      background-color: var(--linkedinBlue2);
+      background-color: #0073b1;
       border-radius: 18px;
       outline: none;
       border: none;

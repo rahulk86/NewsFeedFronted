@@ -1,7 +1,7 @@
-// const baseURL               = "http://3.27.18.133:8086";
-// const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
-const baseURL               = "http://192.168.29.228:8086";
-const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
+const baseURL               = "http://3.27.142.109:8086";
+const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+// const baseURL               = "http://192.168.29.228:8086";
+// const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
 const login                 = "/api/users/login";
 const oauth2                = "/api/users/oauth2";
 const signout               = "/api/users/signout";

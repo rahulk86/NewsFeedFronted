@@ -2,6 +2,9 @@
 .leftside {
     width: 100%;
     max-width: 290px;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
   
   /* ArtCard */
