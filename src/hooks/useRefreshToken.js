@@ -1,6 +1,6 @@
 import axios from '../AUth/NewFeedAPI/axios';
 import useAuth from './useAuth';
-import urls from '../AUth/NewFeedAPI/newFeedUrl';
+import urls from '../AUth/NewFeedAPI/NewFeedUrl';
 
 const useRefreshToken = () => {
     const { setAuth }              = useAuth();

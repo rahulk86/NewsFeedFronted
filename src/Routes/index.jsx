@@ -10,6 +10,7 @@ import PersistLogin from "../components/persistLogin/index";
 import RequireAuth from "../AUth/RequireAuth";
 import Unauthorized from "../AUth/Unauthorized";
 import Layout from "../components/layout/index";
+import MessagingHome from "../components/messagingHome";
 
 
 const ROLES = {
@@ -31,6 +32,7 @@ const RouterComponent = () => (
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route path="/feed" element={<FeedHome/>} />
+            <Route path="/messaging" element={<MessagingHome/>} />
           </Route>
         </Route>
 

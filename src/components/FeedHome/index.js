@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 
 const FeedHome = (props) => {
-  const [postData, setPostData]       = useState();
+  const [postData, setPostData]       = useState(null);
   const [profileData, setProfileData] = useState();
   const navigate                      = useNavigate();
   const axiosPrivate                  = useAxiosPrivate();
@@ -50,7 +50,7 @@ const FeedHome = (props) => {
 
   return (
     <Container>
-      <Header profileData = {profileData} setPostData = {setPostData} />
+      <Header profileData = {profileData} />
       <Layout>
         <Leftside profileData={profileData} />
         {postData && <Posts profileData = {profileData} data={postData} setPostData = {setPostData} />}

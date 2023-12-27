@@ -1,4 +1,4 @@
-import urls from './newFeedUrl';
+import urls from './NewFeedUrl';
 
 export const getProfile =async (axiosPrivate,controller)=>{
     try {
@@ -9,7 +9,19 @@ export const getProfile =async (axiosPrivate,controller)=>{
     } catch (error) {
       throw error;
     }
+}
+
+export const getAllProfile =async (axiosPrivate,controller)=>{
+  try {
+    const response = await axiosPrivate.get(urls.getAllProfile,{
+                                                signal: controller.signal
+                                            });
+    return response;
+  } catch (error) {
+    throw error;
   }
+}
+
 export const uploadImage =async (axiosPrivate,image)=>{
     try {
       const formData = new FormData();

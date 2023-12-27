@@ -1,6 +1,6 @@
 import React from "react";
 import {Link } from "react-router-dom";
-import newFeedUrl from '../../AUth/NewFeedAPI/newFeedUrl';
+import newFeedUrl from '../../AUth/NewFeedAPI/NewFeedUrl';
 import "./index.css";
 
 const Home = (props) => {

@@ -5,12 +5,15 @@ import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import  SignOut from "../../signout/index";
 import  ProfileImage from "../../ProfileImage";
 import NewPost from "../Posts/newPost";
+import {Link, useNavigate,useLocation } from "react-router-dom";
 import styled,{css} from "styled-components";
 
-const Header = ({profileData,setPostData}) => {
+const Header = ({profileData}) => {
 
-  const [showSignOut, setShowSignOut] = useState(false);
+  const [showSignOut, setShowSignOut]   = useState(false);
   const [newPostPopup, setNewPostPopup] = useState(false);
+  const navigate                        = useNavigate();
+  const location                        = useLocation();
 
   const handleMeClick = () => {
     setShowSignOut(!showSignOut);
@@ -18,6 +21,15 @@ const Header = ({profileData,setPostData}) => {
 
   const handleCloseSignOut = () => {
     setShowSignOut(false);
+  };
+  
+
+  const navigateMessaging = ()=>{
+    navigate('/messaging', { state: {  from: location},replace: true });
+  };
+
+  const navigateFeed = ()=>{
+    navigate('/feed', { state: { from: location },replace: true  });
   };
 
   return (
@@ -45,16 +57,16 @@ const Header = ({profileData,setPostData}) => {
           </SearchIcon>
         </Search>
 
-        <SmallMediaNavList isSmallMedia={true}>
-              <NavListItem>
-                <FontAwesomeIcon icon={fortawesome.faMessage} /> 
-                <span>Messaging</span>
-              </NavListItem>
+        <SmallMediaNavList active={"/messaging"==location.pathname}  isSmallMedia={true} onClick={navigateMessaging}>
+          <NavListItem>
+            <FontAwesomeIcon icon={fortawesome.faMessage} /> 
+            <span>Messaging</span>
+          </NavListItem>
         </SmallMediaNavList>
 
         <Nav>
           <NavListWrap>
-            <NavList className="active" isSmallMedia={true}>
+            <NavList active={"/feed"==location.pathname} isSmallMedia={true} onClick={navigateFeed}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faHome} /> 
                 <span>Home</span>
@@ -85,7 +97,7 @@ const Header = ({profileData,setPostData}) => {
               </NavListItem>
             </NavList>
 
-            <NavList isSmallMedia={false}>
+            <NavList active={"/messaging"==location.pathname}  isSmallMedia={false} onClick={navigateMessaging}>
               <NavListItem>
                 <FontAwesomeIcon icon={fortawesome.faMessage} /> 
                 <span>Messaging</span>
@@ -126,7 +138,7 @@ const Header = ({profileData,setPostData}) => {
         </Nav>
       </Content>
       {showSignOut && <SignOut profileData = {profileData} handleCloseSignOut={handleCloseSignOut} />}
-      {newPostPopup && <NewPost funVal = {setNewPostPopup} profileData={profileData} setPostData = {setPostData} />}
+      {newPostPopup && <NewPost funVal = {setNewPostPopup} profileData={profileData} />}
     </Container>
   );
 };
@@ -242,19 +254,6 @@ const NavListWrap = styled.ul`
     display: flex;
     justify-content: center;
   }
-  .active {
-    span:after {
-      content: "";
-      transform: scaleX(1);
-      border-bottom: 2px solid var(--white, #fff);
-      bottom: 0;
-      left: 0;
-      position: absolute;
-      transition: transform 0.2s ease-in-out;
-      width: 100%;
-      border-color: rgba(0, 0, 0, 0.9);
-    }
-  }
 `;
 
 const SmallMediaNavList = styled.li`
@@ -270,13 +269,72 @@ const SmallMediaNavList = styled.li`
        display: none;
       `
     }
+
+  ${(props) =>
+        props.active
+          ? css`
+              color: rgba(0, 0, 0, 0.9);
+            `
+          : css`
+          
+          `
+
+    }
   }
 `;
 
 const NavList = styled.li`
   display: flex;
   align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+
+  ${(props) =>
+      props.active
+        ? css`
+            span:after {
+              content: "";
+              transform: scaleX(1);
+              border-bottom: 2px solid var(--white, #fff);
+              bottom: 0;
+              left: 0;
+              position: absolute;
+              transition: transform 0.2s ease-in-out;
+              width: 100%;
+              border-color: rgba(0, 0, 0, 0.9);
+            }
+            color: rgba(0, 0, 0, 0.9);
+          `
+        : css`
+        
+        `
+    }
+ 
+  
   @media (max-width: 768px) {
+    
+  ${(props) =>
+      props.active
+        ? css`
+            span:after {
+              content: "";
+              transform: scaleX(1);
+              border-top: 2px solid var(--white, #fff);
+              border-bottom: none;
+              bottom: 0;
+              top: 0;
+              left: 0;
+              position: absolute;
+              transition: transform 0.2s ease-in-out;
+              width: 100%;
+              border-color: rgba(0, 0, 0, 0.9);
+            }
+            color: rgba(0, 0, 0, 0.9);
+          `
+        : css`
+        
+        `
+  }
+
   ${(props) =>
     props.isSmallMedia
       ? css`
@@ -298,7 +356,6 @@ const NavListItem = styled.a`
   justify-content: center;
   line-height: 1.5;
   min-width: 75px;
-  color: rgba(0, 0, 0, 0.6);
   position: relative;
   text-decoration: none;
 
@@ -315,8 +372,7 @@ const NavListItem = styled.a`
     padding: 4px;
   }
 
-  &:hover,
-  &:active {
+  &:hover{
     color: rgba(0, 0, 0, 0.9);
   }
 

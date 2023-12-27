@@ -1,4 +1,4 @@
-import urls from './newFeedUrl';
+import urls from './NewFeedUrl';
 
 export const getRepliesByCommentId =async (axiosPrivate,commentId)=>{
     try {

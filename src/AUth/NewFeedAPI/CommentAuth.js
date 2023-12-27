@@ -1,4 +1,4 @@
-import urls from './newFeedUrl';
+import urls from './NewFeedUrl';
 
 export const getComments =async (axiosPrivate,postId)=>{
     try {

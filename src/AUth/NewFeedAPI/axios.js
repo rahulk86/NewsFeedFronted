@@ -1,5 +1,5 @@
 import axios from 'axios';
-import urls from './newFeedUrl';
+import urls from './NewFeedUrl';
 
 
 export default axios.create({

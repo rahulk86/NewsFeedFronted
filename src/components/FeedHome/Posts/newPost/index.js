@@ -9,7 +9,7 @@ import { useNavigate,useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 
-const NewPost = ({ funVal,setPostData ,profileData}) => {
+const NewPost = ({ funVal ,profileData}) => {
   const textareaRef                       = useRef(null);
   const [text, setText]                   = useState();
   const [post, setPost]                   = useState();
@@ -25,7 +25,6 @@ const NewPost = ({ funVal,setPostData ,profileData}) => {
       try {
         const response = await PostAuth.createNewPost(axiosPrivate, post);
         if (response.data) {
-          setPostData(null);
           console.log('post created sucessfully');
           funVal(false);
           navigate('/feed', { state: { from: location }, replace: true });
