@@ -1,51 +1,14 @@
-import React ,{ useEffect,useState } from "react";
+import React  from "react";
 import styled from "styled-components";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { useNavigate,useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
-import * as profileAuth from "../../../AUth/NewFeedAPI/ProfileAuth";
-import NewMessenger from "../NewMessenger";
+import ProfileList from "../ProfileList";
 
 
-const NewChats = ({setMessenger})=>{
-    const axiosPrivate                    = useAxiosPrivate();
-    const navigate                        = useNavigate();
-    const location                        = useLocation();
-    const [profilesData, setProfilesData] = useState();
-
-
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-        const fetchData = async () => {
-          try{
-            const profileResponse = await profileAuth.getAllProfile(axiosPrivate,controller);
-    
-            if(profileResponse.data){
-              if(isMounted){
-                setProfilesData(profileResponse.data);
-              }
-            }
-            else{
-              navigate('/signIn', { state: { from: location }, replace: true });
-            }
-          }
-          catch(err){
-            navigate('/signIn', { state: { from: location }, replace: true });
-          }
-        };
-    
-        fetchData();
-        return () => {
-          isMounted = false;
-          controller.abort();
-        }
-      }, []);
-
+const NewChats = ({setMessenger,setGroupState})=>{
     return(
        <Container>
-         <NewGroup>
+         <NewGroup onClick={()=>{setGroupState('NewGroup')}} >
           <GroupProfile>
             <GroupProfileImage>
               <FontAwesomeIcon icon={fortawesome.faUserGroup} /> 
@@ -58,7 +21,7 @@ const NewChats = ({setMessenger})=>{
           </GroupProfile>
          </NewGroup>
 
-         <NewGroup>
+         <NewGroup onClick={()=>{setGroupState('NewCommunity')}} >
           <GroupProfile>
             <GroupProfileImage>
               <FontAwesomeIcon icon={fortawesome.faUsers} /> 
@@ -70,10 +33,8 @@ const NewChats = ({setMessenger})=>{
             </GroupProfileInfo>
           </GroupProfile>
          </NewGroup>
-
-         {profilesData && profilesData.map((post,index) => (
-            <NewMessenger profileData = {post} setMessenger={setMessenger} />
-          ))}
+         
+         <ProfileList setMessenger={setMessenger} />
        </Container>
     );
 
@@ -102,7 +63,10 @@ const GroupProfileInfo = styled.div`
     span{
       font-size: 12px;
     }
-    width: 100%;
+    width: 95%;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 `;
 
@@ -125,9 +89,9 @@ const GroupProfileImage = styled.div`
   }
 
   >svg {
-    width: 84%;
-    padding-left: 4px;
-    height: 94%;
+    width: 70%;
+    padding-left: 7px;
+    height: 90%;
     object-fit: cover;
   }
 `;

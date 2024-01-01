@@ -1,12 +1,13 @@
-const baseURL               = "http://3.27.18.133:8086";
-const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+// const baseURL               = "http://54.253.132.48:8086";
+// const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+const baseURL               = "http://localhost:8086";
 // const baseURL               = "http://192.168.29.228:8086";
 const webSocketURL          = `${baseURL}/wb`;
-// const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
+const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
 
 const login                 = "/api/users/login";
 const oauth2                = "/api/users/oauth2";
-const signout               = "/api/users/signout";
+const signout               = "/api/usersAuth/signout";
 const refresh               = "/api/users/refresh";
 const signUp                = "/api/users/signup";
 const register              = "/api/users/register";
@@ -28,10 +29,18 @@ const createReplyForReply   = "/api/users/post/comment/reply/reply/create";
 const allReplyReplies       = "/api/users/post/comment/reply/reply/get";
 
 const getMessenger          = "/api/messenger/createUserMessenger";
+const createGroup           = "/api/messenger/createGroup";
 const conversation          = "/topic/conversation";
 const sendMessage           = "/api/messenger/sendMessage";
+const groupConversation     = "/topic/GroupConversation";
+const groupSendMessage      = "/api/messenger/sendGroupMessage";
+const receiveUpdateTime     = "/topic/receiveUpdateTime";
+const updateTime            = "/api/messenger/updateTime";
+
 const getMessengers         = "/api/messenger/get";
 const getUserMessages       = "/api/messenger/getUserMessage";
+const getGroupMessage       = "/api/messenger/getGroupMessage";
+const updateMessengerTime   = "/api/messenger/updateMessengerTime";
 
 const googleAuthUrl       = `${baseURL}/oauth2/authorize/google?redirect_uri=${Oauth2RedirectUri}`;
 const FaceBookAuthUrl     = `${baseURL}/oauth2/authorize/facebook?redirect_uri=${Oauth2RedirectUri}`;
@@ -65,5 +74,12 @@ export default {
     getMessengers,
     conversation,
     sendMessage,
-    getUserMessages
+    getUserMessages,
+    groupConversation,
+    groupSendMessage,
+    createGroup,
+    getGroupMessage,
+    updateMessengerTime,
+    receiveUpdateTime,
+    updateTime
   };

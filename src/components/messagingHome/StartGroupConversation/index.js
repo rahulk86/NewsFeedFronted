@@ -5,58 +5,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import *  as messagingAuth  from "../../../AUth/NewFeedAPI/MessagingAuth";
-import useStompWebSocketPrivate from "../../../hooks/useStompWebSocketPrivate";
+import useGroupStompWebSocketPrivate from "../../../hooks/useGroupStompWebSocketPrivate";
 
-const StartConversation = ({messenger,setMessenger})=>{
+const StartGroupConversation = ({messenger,setMessenger})=>{
   const axiosPrivate                         = useAxiosPrivate();
   const [message , setMessage]               = useState();
   const [recieveMessage , setRecieveMessage] = useState([]);
-  const [messengerDate , setMessengerDate]   = useState([]);
+  const [groupMember , setGroupMember]       = useState([]);
+
   const options = { hour: 'numeric', minute: '2-digit', hour12: true };
 
   const recieveMessageToSubscriber = (message) => {
-    const userMessageResponse = JSON.parse(message.body).body;
-    setRecieveMessage((prevMessages) => [...prevMessages, userMessageResponse.message]);
-    if(messenger.id == userMessageResponse.messenger.id){
-      messenger.creatAt = userMessageResponse.messenger.creatAt;
-    }
+    const data = JSON.parse(message.body);
+    setRecieveMessage((prevMessages) => [...prevMessages, data.body]);
   }
 
-  const receiveUpdateTime = (message) => {
-    const response = JSON.parse(message.body).body;
+  const {sendMessage } = useGroupStompWebSocketPrivate(messenger,recieveMessageToSubscriber);
 
-    if(messenger.id == response.receiver.id){
-      messenger.creatAt = response.receiver.creatAt;
-    }
-
-    if(messenger.id == response.sender.id){
-      messenger.creatAt = response.sender.creatAt;
-    }
-    setMessengerDate(messenger.creatAt);
-  }
-
-const {sendMessage,updateTime} = useStompWebSocketPrivate(messenger,recieveMessageToSubscriber,receiveUpdateTime,axiosPrivate);
-
-const sendMessageToSubscriber=()=>{
+  const sendMessageToSubscriber=()=>{
     let data = {};
     data.text = message;
     sendMessage(messenger.conversationId,data);
     setMessage("");
-}
+  }
 
-const handleChangeMessage = async (e)=>{
-  setMessage(e.target.value);
-  updateTime(messenger);
-};
-
-useEffect( ()  => {},[messengerDate]);
-
-useEffect( ()  => {
+  useEffect( ()  => {
     (async ()=>{
       try{
-       let response = await messagingAuth.getAllMessages(axiosPrivate,messenger);
+       let response = await messagingAuth.getAllGroupMessages(axiosPrivate,messenger);
       if(response.data){
-        setRecieveMessage(response.data);
+        setRecieveMessage(response.data.messages);
+        setGroupMember(response.data.member);
       }else{
         
         }
@@ -81,7 +60,9 @@ useEffect( ()  => {
                 </ArrowNavListWrap>
 
                 <UserProfile>
-                    <ProfileImage profileData={{image:messenger?.image}} />
+                  {messenger?.type == 'GroupMessenger' && !messenger.image
+                  ? <FontAwesomeIcon icon={fortawesome.faUserGroup} />
+                  :<ProfileImage profileData={{image:messenger.image}} />}
                 </UserProfile>
 
                 <ProfileInfo>
@@ -109,14 +90,23 @@ useEffect( ()  => {
    
            <ConversationArea>
            {recieveMessage && recieveMessage.length!=0 && recieveMessage.map((message,index) => (
-            <Message isSent={message?.messengerId != messenger.id}>
-              <MessageContent>{message?.text}</MessageContent>
-              <MessageTimestamp>
-                 {new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}
-                 {message?.messengerId != messenger.id 
-                     && <Unread isUnread={messenger.creatAt>message?.creatAt} ><FontAwesomeIcon icon={fortawesome.faCheckDouble} /></Unread> }
-              </MessageTimestamp>
+            message?.groupMember.id != groupMember.id ? <Message>
+              <MemeberProfile>
+                  <ProfileImage profileData={{image:message.groupMember.image}} />
+                </MemeberProfile>
+              <MemberInfo>
+              <span>{message.groupMember.name}</span>
+                <MessageText>
+                  <MessageContent>{message?.text}</MessageContent>
+                  <MessageTimestamp>{new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}</MessageTimestamp>
+                </MessageText>
+              </MemberInfo>
             </Message>
+            :
+            <SelfMessage isSent={message?.messengerId != messenger.id}>
+              <MessageContent>{message?.text}</MessageContent>
+              <MessageTimestamp>{new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}</MessageTimestamp>
+            </SelfMessage>
            ))
            }
            </ConversationArea>
@@ -139,8 +129,7 @@ useEffect( ()  => {
                     <Search>
                       <div>
                         <input 
-                          onChange={handleChangeMessage}
-                          onClick={handleChangeMessage}
+                          onChange={(e) => setMessage(e.target.value)}
                           value={message || ""}
                           id="chat" 
                           type="text" 
@@ -355,52 +344,17 @@ const ConversationArea =  styled.div`
    
 const Message = styled.div`
   display: flex;
-  flex-direction: column;
-  ${(props) =>
-      props.isSent
-        ? css`
-            background-color: #dcf8c6;
-            align-self: flex-end;
-            max-width: 70%;
-            margin-bottom: 5px;
-            padding: 8px;
-            border-radius: 8px;
-          `
-        : css`
-            background-color: #fff;
-            align-self: flex-start;
-            max-width: 70%;
-            margin-bottom: 5px;
-            padding: 8px;
-            border-radius: 8px;
-          `
-    }
+  padding: 8px;
 `
 const MessageContent = styled.div`
 
-`;
-const Unread = styled.div`
- >svg{
-    font-size: 12px;
-    padding-left: 5px;
-    ${(props) =>
-      props.isUnread
-        ? css`
-           color:  #53bdeb;
-          `
-        : css`
-          
-          `
-    }
-  }
-`;
+`
 const MessageTimestamp = styled.div`
-   display: flex;
   font-size: 0.6em;
+  display: flex;
   color: #888;
-  align-self: flex-end;
-`;
-
+  justify-content: end;
+`
 const Profile = styled.div`
   display: flex;
   align-items: center;
@@ -424,5 +378,56 @@ const ProfileName = styled.div`
   
 `;
 
-export default StartConversation;
+const MemeberProfile = styled.div`
+  width: 42px;
+  height: 42px;
+  margin-right: 10px;
+  margin-bottom: auto;
+  box-sizing: border-box;
+  background-clip: content-box;
+  background-color: white;
+  background-position: center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  border: 0px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
+  >img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  >svg {
+    width: 73%;
+    padding-left: 5px;
+    height: 89%;
+    object-fit: cover;
+  }
+`;
+
+const MemberInfo = styled.div`
+  background: white;
+  font-size: 14px;
+  border-radius: 0px 7px 7px 7px;
+  padding: 9px;
+`;
+
+const SelfMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  max-width: 70%;
+  margin-bottom: 5px;
+  padding: 8px;
+  border-radius: 8px;
+`;
+
+const MessageText = styled.div`
+
+`;
+
+
+export default StartGroupConversation;
    

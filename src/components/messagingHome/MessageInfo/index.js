@@ -1,25 +1,43 @@
 
 import React ,{ useEffect,useState } from "react";
-import styled from "styled-components";
+import styled ,{css} from "styled-components";
 import ProfileImage from "../../ProfileImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
+import { useNavigate,useLocation } from "react-router-dom";
 import NewChats from "../NewChats"
 import Messengers from "../Messengers"
 
-const MessageInfo = ({profileData,setMessenger})=>{
-  const [currentState, setCurrentState] = useState(false);
+const MessageInfo = ({profileData,setMessenger,setGroupState,setCurrentState,currentState})=>{
+  const navigate                        = useNavigate();
+  const location                        = useLocation();
+
+  const navigateFeed = ()=>{
+    navigate('/feed', { state: { from: location },replace: true  });
+  };
 
   let getCuurentMessageInfo = ()=>{
     switch(currentState){
-       case 'newchats' : return <NewChats setMessenger={setMessenger}/>
+       case 'newchats' : return <NewChats setMessenger={setMessenger} setGroupState={setGroupState}/>
        case 'chat'     : 
       case 'status': 
-      default:return <Messengers setMessenger={setMessenger}/>
+      default:return <Messengers setMessenger={setMessenger} setCurrentState={setCurrentState} />
     }
   }
+  useEffect(() => {
+
+  }, [currentState]);;
     return (
      <Container>
+      <HeaderTop>
+      <SmallMediaNavList>
+        <FontAwesomeIcon icon={fortawesome.faArrowLeft} onClick={navigateFeed} />
+        <span>NewFeedChats</span>
+        <FontAwesomeIcon icon={fortawesome.faCamera} />
+        <FontAwesomeIcon icon={fortawesome.faSearch} />
+        <FontAwesomeIcon icon={fortawesome.faEllipsisVertical} /> 
+      </SmallMediaNavList>
+      </HeaderTop>
         <Header>
             <UserProfile>
                 <ProfileImage profileData={profileData} />
@@ -27,7 +45,7 @@ const MessageInfo = ({profileData,setMessenger})=>{
             <NavListWrap>
                <NavList onClick={()=>{setCurrentState('chat')}}>
                  <NavListItem>
-                    <FontAwesomeIcon icon={fortawesome.faComment} /> 
+                    <FontAwesomeIcon icon={fortawesome.faComment} />
                  </NavListItem>
                </NavList>
 
@@ -45,19 +63,40 @@ const MessageInfo = ({profileData,setMessenger})=>{
                  </NavListItem>
                </NavList>
 
-               <NavList onClick={()=>{setCurrentState('newchats')}}>
+               <NavList  onClick={()=>{setCurrentState('newchats')}}>
                  <NavListItem>
                    <FontAwesomeIcon icon={fortawesome.faSquarePlus} /> 
                  </NavListItem>
                </NavList>
 
-               <NavList>
+               <NavList >
                  <NavListItem>
                    <FontAwesomeIcon icon={fortawesome.faEllipsisVertical} /> 
                  </NavListItem>
                </NavList>
 
             </NavListWrap>
+
+            <SmallMediaNavList>
+               <NavList isCurrentState={currentState=='community'}  onClick={()=>{setCurrentState('community')}}>
+                    <FontAwesomeIcon icon={fortawesome.faUsers} /> 
+               </NavList>
+
+
+               <NavList isCurrentState={currentState=='chat'} onClick={()=>{setCurrentState('chat')}}>
+                    <span>Chats</span> 
+               </NavList>
+
+
+               <NavList isCurrentState={currentState=='Updates'} onClick={()=>{setCurrentState('Updates')}}>
+                    <span>Updates</span> 
+               </NavList>
+
+               <NavList isCurrentState={currentState=='Call'} onClick={()=>{setCurrentState('Call')}}>
+                    <span>Call</span> 
+               </NavList>
+
+            </SmallMediaNavList>
         </Header>
 
         <MessengersData>
@@ -94,6 +133,22 @@ const NavList = styled.li`
   display: flex;
   align-items: center;
   color: rgba(0, 0, 0, 0.6);
+  @media (max-width: 768px) {
+    ${(props) =>
+    props.isCurrentState
+      ? css`transform: scaleX(1);
+            border-bottom: 2px solid var(--white, #fff);
+            bottom: 0;
+            left: 0;
+            transition: transform 0.2s ease-in-out;
+            border-color: rgba(0, 0, 0, 0.9);
+            color: unset;
+            padding-bottom: 3px;
+          `
+      : css`
+      `
+    }
+  }
 `;
 
 const NavImage = styled.img`
@@ -126,13 +181,12 @@ const NavListItem = styled.a`
   img {
     font-size: 20px;
   }
+
   span {
     display: flex;
     align-items: center;
-    @media (max-width: 768px) {
-     font-size: 8px;
-    }
     padding: 4px;
+    color: rgba(0, 0, 0, 0.9);
   }
 
   &:hover{
@@ -144,6 +198,20 @@ const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
   list-style-type: none;
+  @media (max-width: 768px) {
+      display: none;
+  }
+`;
+const SmallMediaNavList = styled.ul`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0px 10px 0 10px;
+    width: 100%;
+    justify-content: space-between;
+    list-style-type: none;
+  }
 `;
 
 const Header = styled.div`
@@ -152,6 +220,16 @@ const Header = styled.div`
    background-color: white;
    border-right: 1px solid rgba(0, 0, 0, 0.15);
    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+`;
+
+const HeaderTop = styled.div`
+  display: none;
+ @media (max-width: 768px) {
+   display: flex;
+   justify-content: space-between;
+   background-color: white;
+   font-size: 20px;
+ }
 `;
 
 const UserProfile = styled.div`

@@ -1,6 +1,7 @@
 import React, { useRef,useState ,useEffect} from 'react';
 import  * as userAuth from "../../AUth/NewFeedAPI/UserAuth";
-import {useLocation} from "react-router-dom";
+import {useNavigate,useLocation } from "react-router-dom";
+import useAuth from '../../hooks/useAuth';
 import {  Container,
           Content,
           Nav,
@@ -26,34 +27,56 @@ function SignupWithSecurityCheck() {
   const [lastName, setLastName]      = useState('');
   const [errMsg, setErrMsg]          = useState('');
   const [success, setSuccess]        = useState(false);
+  const navigate                     = useNavigate();
   const location                     = useLocation();
+  const { setAuth }                  = useAuth(); 
     
   useEffect(() => {
     userRef.current.focus();
   }, [])
 
+  let responsehandler = function(response,eamil,password){
+    const accessToken = response?.data?.accessToken;
+    const roles       = response?.data?.roles;
+    setAuth({eamil, password, roles, accessToken });
+    navigate("/feed", { replace: true });
+  }
+
+  let errorhandler = function(err){
+    if (!err?.response) {
+      setErrMsg('No Server Response');
+    } else if (err.response?.status === 409) {
+      setErrMsg(err.response.data?.message);
+    } else {
+      setErrMsg('Registration Failed')
+    }
+    errRef.current.focus();
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      let emailOrPhone = location?.state?.emailOrPhone;
+      let password     = location?.state?.password;
       const respnse =  await userAuth.createNewUser(
-                                  location?.state?.emailOrPhone,
-                                  location?.state?.password,
+                                  emailOrPhone,
+                                  password,
                                   firstName+' ' +lastName
                               );
       if(respnse.data){
-        setSuccess(true);
-        setFirstName('');
-        setFirstName('');
+        try{
+          setSuccess(true);
+          let authRespnse =  await userAuth.signInWithEmailAndPassword(emailOrPhone,password);
+          responsehandler(authRespnse,emailOrPhone,password);
+          setFirstName('');
+          setFirstName('');
+        }
+        catch(err){
+          errorhandler(err);
+        }
       }
   } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 409) {
-        setErrMsg(err.response.data?.message);
-      } else {
-        setErrMsg('Registration Failed')
-      }
-      errRef.current.focus();
+    errorhandler(err);
   }
   };
 

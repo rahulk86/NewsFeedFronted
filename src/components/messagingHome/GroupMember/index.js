@@ -1,30 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import ProfileImage from "../../ProfileImage";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import * as messagingAuth from "../../../AUth/NewFeedAPI/MessagingAuth";
-import { useNavigate,useLocation } from "react-router-dom";
 
 
-const NewMessenger = ({profileData,setMessenger})=>{
-    const axiosPrivate                  = useAxiosPrivate();
-    const navigate                      = useNavigate();
-    const location                      = useLocation();
-    
-
-    const getsetMessenger = async ()=>{
-        if(!setMessenger) return;
-        const response = await messagingAuth.getMessenger(axiosPrivate,profileData);
-            if(response.data){
-              setMessenger(response.data);
-            }
-            else{
-              navigate('/signIn', { state: { from: location }, replace: true });
-            }
-    }
-
+const GroupMember = ({profileData,onSelect})=>{
     return(
-        <Container onClick={getsetMessenger}>
+        <Container onClick={onSelect}>
             <GroupProfile>
             <GroupProfileImage>
                 <ProfileImage profileData={profileData} />
@@ -100,4 +81,4 @@ const ProfileName = styled.div`
     }
   
 `;
-export default NewMessenger;
+export default GroupMember;

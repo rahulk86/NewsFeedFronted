@@ -89,16 +89,23 @@ function Signup(props) {
                               }
                 );
       }
-  } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 409) {
-        setErrMsg(err.response.data?.message);
-      } else {
-        setErrMsg('Registration Failed')
+      else{
+        errorhandler(respnse);
       }
-      errRef.current.focus();
+  } catch (err) {
+    errorhandler(err);
   }
+  };
+
+  let errorhandler = function(err){
+    if (!err?.response) {
+      setErrMsg('No Server Response');
+    } else if (err.response?.status === 409) {
+      setErrMsg(err.response.data?.message);
+    } else {
+      setErrMsg('Registration Failed')
+    }
+    errRef.current.focus();
   };
 
   return (

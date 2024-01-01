@@ -5,7 +5,7 @@ import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import  SignOut from "../../signout/index";
 import  ProfileImage from "../../ProfileImage";
 import NewPost from "../Posts/newPost";
-import {Link, useNavigate,useLocation } from "react-router-dom";
+import {useNavigate,useLocation } from "react-router-dom";
 import styled,{css} from "styled-components";
 
 const Header = ({profileData}) => {

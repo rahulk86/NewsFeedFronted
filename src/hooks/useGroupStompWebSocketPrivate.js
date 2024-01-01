@@ -4,9 +4,8 @@ import Stomp from 'stompjs';
 import useRefreshToken from './useRefreshToken';
 import useAuth from './useAuth';
 import urls from '../AUth/NewFeedAPI/NewFeedUrl';
-import *  as messagingAuth  from "../AUth/NewFeedAPI/MessagingAuth";
 
-const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axiosPrivate) => {
+const useGroupWebSocket = (messenger,recieveMessageToSubscriber) => {
   const refresh                       = useRefreshToken();
   const { auth }                      = useAuth();
   const [stompClient, setStompClient] = useState(null);
@@ -19,20 +18,18 @@ const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axi
         console.error('Access token is missing. Unable to connect to WebSocket.');
         return;
       }
+
       const socket = new SockJS(urls.webSocketURL);
       const client = Stomp.over(socket);
       client.connect(
         {
           Authorization: `Bearer ${accessToken}`,
         },
-        async () => {
+        () => {
           console.log('WebSocket connected');
-          let response  = await messagingAuth.getUpdatedMessenger(axiosPrivate,messenger);
-          messenger.creatAt = response.data.receiver.creatAt;
           setIsConnected(true);
           setStompClient(client);
-          client.subscribe(urls.conversation + `/${messenger.conversationId}`, recieveMessageToSubscriber);
-          client.subscribe(urls.receiveUpdateTime + `/${messenger.conversationId}`, receiveUpdateTime);
+          client.subscribe(urls.groupConversation + `/${messenger.conversationId}`, recieveMessageToSubscriber);
         },
         async (error) => {
           if (error?.response?.status === 401) {
@@ -61,7 +58,7 @@ const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axi
 
   const sendMessage = (conversationId,message) => {
     if (isConnected) {
-      stompClient.send(urls.sendMessage+'/'+conversationId,  {
+      stompClient.send(urls.groupSendMessage+'/'+conversationId,  {
                                             Authorization: `Bearer ${auth?.accessToken}`,
                                           }, JSON.stringify(message));
     } else {
@@ -69,19 +66,7 @@ const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axi
     }
   };
 
-  const updateTime = (messenger) => {
-    if (isConnected) {
-      stompClient.send(urls.updateTime+'/'+messenger.conversationId,  {
-                                            Authorization: `Bearer ${auth?.accessToken}`,
-                                          }, JSON.stringify(messenger));
-    } else {
-      console.error('WebSocket not connected. Unable to send message.');
-    }
-  };
-
-  
-
-  return {sendMessage,updateTime};
+  return {sendMessage };
 };
 
-export default useWebSocket;
+export default useGroupWebSocket;

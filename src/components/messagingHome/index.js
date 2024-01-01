@@ -6,15 +6,31 @@ import { useNavigate,useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as profileAuth from "../../AUth/NewFeedAPI/ProfileAuth";
 import MessageInfo from "./MessageInfo";
+import NewGroupHandler from "./NewGroupHandler";
 import StartConversation from "./StartConversation";
+import StartGroupConversation from "./StartGroupConversation";
 
 const MessagingHome=(prop)=>{
-  const axiosPrivate                  = useAxiosPrivate();
-  const navigate                      = useNavigate();
-  const [profileData, setProfileData] = useState();
-  const [messenger, setMessenger]     = useState();
-  const location                      = useLocation();
+  const axiosPrivate                    = useAxiosPrivate();
+  const navigate                        = useNavigate();
+  const [profileData, setProfileData]   = useState();
+  const [messenger, setMessenger]       = useState();
+  const location                        = useLocation();
+  const [isMobile, setIsMobile]         = useState(false);
+  const [groupState, setGroupState]     = useState();
+  const [currentState, setCurrentState] = useState('chat');
 
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobileView = window.matchMedia('(max-width: 768px)').matches;
+      setIsMobile(isMobileView);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
 
     useEffect(() => {
@@ -43,15 +59,44 @@ const MessagingHome=(prop)=>{
         isMounted = false;
         controller.abort();
       }
-    }, []);
+    }, [messenger]);
 
+    let getConversation = ()=>{
+      if(!messenger){
+        return ;
+      }
+      switch(messenger.type){
+        case 'UserMessenger'  : return <StartConversation messenger={messenger} setMessenger={setMessenger} />
+        case 'GroupMessenger' : return <StartGroupConversation messenger={messenger} setMessenger={setMessenger} />
+        default:return;
+      }
+    }
+
+
+    let getCuurentGroupState = ()=>{
+      switch(groupState){
+        case 'NewGroup'     : return <NewGroupHandler 
+                                        profileData = {profileData}  
+                                        setGroupState={setGroupState} 
+                                        setCurrentState={setCurrentState} 
+                                         />
+        case 'NewCommunity' : 
+        default:return (!messenger || !isMobile )&& <MessageInfo 
+                                                      setGroupState = {setGroupState} 
+                                                      profileData = {profileData} 
+                                                      setMessenger = {setMessenger}
+                                                      setCurrentState = {setCurrentState}
+                                                      currentState = {currentState}
+                                                    />
+      }
+    }
 
     return (
         <Container>
-            {profileData && <Header profileData = {profileData} />}
+            {profileData && !isMobile &&  <Header profileData = {profileData} />}
             <Layout>
-              <MessageInfo profileData = {profileData} setMessenger={setMessenger} />
-              {messenger && <StartConversation messenger={messenger}/>}
+            {getCuurentGroupState()}
+            {getConversation()}
             </Layout>
         </Container>
     );
@@ -70,9 +115,10 @@ const Layout = styled.div`
   @media (max-width: 768px) {
     display: flex;
     width: 100%;
+    height: 100vh;
     flex-direction: column;
-    padding-top: 18%;
-    padding-bottom: 60px;
+    padding-top: unset;
+    padding-bottom: unset;
   }
 `;
 
