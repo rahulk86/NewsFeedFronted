@@ -6,14 +6,17 @@ import  SignOut from "../../signout/index";
 import  ProfileImage from "../../ProfileImage";
 import NewPost from "../Posts/newPost";
 import {useNavigate,useLocation } from "react-router-dom";
+import * as messagingAuth from "../../../AUth/NewFeedAPI/MessagingAuth";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import styled,{css} from "styled-components";
 
 const Header = ({profileData}) => {
-
-  const [showSignOut, setShowSignOut]   = useState(false);
-  const [newPostPopup, setNewPostPopup] = useState(false);
-  const navigate                        = useNavigate();
-  const location                        = useLocation();
+  const [showSignOut, setShowSignOut]         = useState(false);
+  const [newPostPopup, setNewPostPopup]       = useState(false);
+  const [unreadMessenger, setUnreadMessenger] = useState(0);
+  const axiosPrivate                          = useAxiosPrivate();
+  const navigate                              = useNavigate();
+  const location                              = useLocation();
 
   const handleMeClick = () => {
     setShowSignOut(!showSignOut);
@@ -22,7 +25,13 @@ const Header = ({profileData}) => {
   const handleCloseSignOut = () => {
     setShowSignOut(false);
   };
-  
+  useEffect(() => {
+    const fetchData = async () => {
+        const unreadCountResponse = await messagingAuth.getUnreadMessenger(axiosPrivate);
+        unreadCountResponse.data && setUnreadMessenger(unreadCountResponse.data);
+    }
+    fetchData();
+  },[]);
 
   const navigateMessaging = ()=>{
     navigate('/messaging', { state: {  from: location},replace: true });
@@ -99,6 +108,11 @@ const Header = ({profileData}) => {
 
             <NavList active={"/messaging"==location.pathname}  isSmallMedia={false} onClick={navigateMessaging}>
               <NavListItem>
+                <UnreadMessageCount>
+                  {unreadMessenger > 0 && (
+                    <CountBadge>{unreadMessenger}</CountBadge>
+                  )}
+                </UnreadMessageCount>
                 <FontAwesomeIcon icon={fortawesome.faMessage} /> 
                 <span>Messaging</span>
               </NavListItem>
@@ -142,6 +156,26 @@ const Header = ({profileData}) => {
     </Container>
   );
 };
+
+
+const CountBadge = styled.div`
+  position: absolute;
+  top: -5px;
+  left: 3px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0px 6px;
+  border-radius: 50%;
+`;
+
+const UnreadMessageCount = styled.div`
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+`;
+
 
 const Container = styled.div`
   background-color: white;

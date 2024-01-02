@@ -38,6 +38,7 @@ const receiveUpdateTime     = "/topic/receiveUpdateTime";
 const updateTime            = "/api/messenger/updateTime";
 
 const getMessengers         = "/api/messenger/get";
+const unreadCount           = "/api/messenger/unreadCount";
 const getUserMessages       = "/api/messenger/getUserMessage";
 const getGroupMessage       = "/api/messenger/getGroupMessage";
 const updateMessengerTime   = "/api/messenger/updateMessengerTime";
@@ -81,5 +82,6 @@ export default {
     getGroupMessage,
     updateMessengerTime,
     receiveUpdateTime,
-    updateTime
+    updateTime,
+    unreadCount
   };

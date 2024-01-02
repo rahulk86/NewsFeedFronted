@@ -44,9 +44,19 @@ export const createGroup =async (axiosPrivate,groupRequest)=>{
     throw error;
   }
 }
+
 export const getUpdatedMessenger = async (axiosPrivate,messenger)=>{
   try {
     const response = await axiosPrivate.post(urls.updateMessengerTime,messenger);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const getUnreadMessenger = async (axiosPrivate)=>{
+  try {
+    const response = await axiosPrivate.post(urls.unreadCount);
     return response;
   } catch (error) {
     throw error;

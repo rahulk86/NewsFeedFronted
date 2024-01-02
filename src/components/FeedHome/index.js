@@ -5,6 +5,7 @@ import Header from "./Header/index";
 import Rightside from "./Rightside";
 import * as postAuth from "../../AUth/NewFeedAPI/PostAuth";
 import * as profileAuth from "../../AUth/NewFeedAPI/ProfileAuth";
+import * as messagingAuth from "../../AUth/NewFeedAPI/MessagingAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate,useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -12,22 +13,25 @@ import styled from "styled-components";
 
 
 const FeedHome = (props) => {
-  const [postData, setPostData]       = useState(null);
-  const [profileData, setProfileData] = useState();
-  const navigate                      = useNavigate();
-  const axiosPrivate                  = useAxiosPrivate();
-  const location                      = useLocation();
+  const [postData, setPostData]               = useState(null);
+  const [profileData, setProfileData]         = useState();
+  const [unreadMessenger, setUnreadMessenger] = useState(0);
+  const navigate                              = useNavigate();
+  const axiosPrivate                          = useAxiosPrivate();
+  const location                              = useLocation();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
     const fetchData = async () => {
       try{
-        const response        = await postAuth.getPosts(axiosPrivate,controller);
-        const profileResponse = await profileAuth.getProfile(axiosPrivate,controller);
+        const response            = await postAuth.getPosts(axiosPrivate,controller);
+        const profileResponse     = await profileAuth.getProfile(axiosPrivate,controller);
+        const unreadCountResponse = await messagingAuth.getUnreadMessenger(axiosPrivate);
 
         if(response.data && profileResponse.data){
           if(isMounted){
             setPostData(response.data) ;
+            unreadCountResponse.data && setUnreadMessenger(unreadCountResponse.data) ;
             setProfileData(profileResponse.data);
           }
         }
@@ -50,7 +54,7 @@ const FeedHome = (props) => {
 
   return (
     <Container>
-      <Header profileData = {profileData} />
+      <Header profileData = {profileData} unreadMessenger={unreadMessenger} />
       <Layout>
         <Leftside profileData={profileData} />
         {postData && <Posts profileData = {profileData} data={postData} setPostData = {setPostData} />}
