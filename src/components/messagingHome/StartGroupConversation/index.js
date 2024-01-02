@@ -6,6 +6,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import *  as messagingAuth  from "../../../AUth/NewFeedAPI/MessagingAuth";
 import useGroupStompWebSocketPrivate from "../../../hooks/useGroupStompWebSocketPrivate";
+import CoversationMessageTimestamp from "../CoversationMessageTimestamp";
 
 const StartGroupConversation = ({messenger,setMessenger})=>{
   const axiosPrivate                         = useAxiosPrivate();
@@ -98,14 +99,22 @@ const StartGroupConversation = ({messenger,setMessenger})=>{
               <span>{message.groupMember.name}</span>
                 <MessageText>
                   <MessageContent>{message?.text}</MessageContent>
-                  <MessageTimestamp>{new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}</MessageTimestamp>
+                  <CoversationMessageTimestamp
+                    createdAt={message?.creatAt}
+                    isSelf={false}
+                    isUnread={false}
+                  />
                 </MessageText>
               </MemberInfo>
             </Message>
             :
             <SelfMessage isSent={message?.messengerId != messenger.id}>
               <MessageContent>{message?.text}</MessageContent>
-              <MessageTimestamp>{new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}</MessageTimestamp>
+              <CoversationMessageTimestamp
+                 createdAt={message?.creatAt}
+                 isSelf={false}
+                 isUnread={false}
+              />
             </SelfMessage>
            ))
            }

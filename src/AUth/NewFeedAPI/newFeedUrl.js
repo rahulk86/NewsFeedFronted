@@ -1,9 +1,9 @@
-// const baseURL               = "http://54.253.132.48:8086";
-// const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
-const baseURL               = "http://localhost:8086";
+const baseURL               = "http://54.253.132.48:8086";
+const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+// const baseURL               = "http://localhost:8086";
 // const baseURL               = "http://192.168.29.228:8086";
 const webSocketURL          = `${baseURL}/wb`;
-const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
+// const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
 
 const login                 = "/api/users/login";
 const oauth2                = "/api/users/oauth2";

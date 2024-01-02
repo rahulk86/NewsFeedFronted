@@ -1,11 +1,13 @@
 import React ,{ useEffect,useState } from "react";
 import styled ,{css} from "styled-components";
 import ProfileImage from "../../ProfileImage";
+import CoversationMessageTimestamp from "../CoversationMessageTimestamp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import *  as messagingAuth  from "../../../AUth/NewFeedAPI/MessagingAuth";
 import useStompWebSocketPrivate from "../../../hooks/useStompWebSocketPrivate";
+
 
 const StartConversation = ({messenger,setMessenger})=>{
   const axiosPrivate                         = useAxiosPrivate();
@@ -111,11 +113,11 @@ useEffect( ()  => {
            {recieveMessage && recieveMessage.length!=0 && recieveMessage.map((message,index) => (
             <Message isSent={message?.messengerId != messenger.id}>
               <MessageContent>{message?.text}</MessageContent>
-              <MessageTimestamp>
-                 {new Intl.DateTimeFormat('en-US', options).format(new Date(message?.creatAt))}
-                 {message?.messengerId != messenger.id 
-                     && <Unread isUnread={messenger.creatAt>message?.creatAt} ><FontAwesomeIcon icon={fortawesome.faCheckDouble} /></Unread> }
-              </MessageTimestamp>
+              <CoversationMessageTimestamp
+                 createdAt={message?.creatAt}
+                 isSelf={message?.messengerId != messenger.id}
+                 isUnread={messenger.creatAt>message?.creatAt}
+              />
             </Message>
            ))
            }
@@ -378,27 +380,6 @@ const Message = styled.div`
 `
 const MessageContent = styled.div`
 
-`;
-const Unread = styled.div`
- >svg{
-    font-size: 12px;
-    padding-left: 5px;
-    ${(props) =>
-      props.isUnread
-        ? css`
-           color:  #53bdeb;
-          `
-        : css`
-          
-          `
-    }
-  }
-`;
-const MessageTimestamp = styled.div`
-   display: flex;
-  font-size: 0.6em;
-  color: #888;
-  align-self: flex-end;
 `;
 
 const Profile = styled.div`

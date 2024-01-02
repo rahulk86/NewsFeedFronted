@@ -10,8 +10,6 @@ const PersistLogin = () => {
     const { auth } = useAuth();
 
     useEffect(() => {
-       let isMounted = true;
-
         const verifyRefreshToken = async () => {
             try {
                 await refresh();
@@ -23,11 +21,8 @@ const PersistLogin = () => {
                 setIsLoading(false);
             }
         }
-
-        // persist added here AFTER tutorial video
-        // Avoids unwanted call to verifyRefreshToken
         !auth?.accessToken? verifyRefreshToken() : setIsLoading(false);
-        return () => isMounted = false;
+        return () => false;
 
     }, [])
 

@@ -3,16 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import * as ReplyAuth from "../../../../../../../../../AUth/NewFeedAPI/ReplyAuth";
 import useAxiosPrivate from "../../../../../../../../../hooks/useAxiosPrivate";
-import { useNavigate,useLocation } from "react-router-dom";
 import Reply from "../../reply"
 import styled from "styled-components";
 import ProfileImage from "../../../../../../../../ProfileImage";
 
 const StartReplyOnReply = ({setCommetData,reply,replies,profileData}) => {
   const [replyText, setReplyText]     = useState();
-  const axiosPrivate                      = useAxiosPrivate();
-  const navigate                          = useNavigate();
-  const location                          = useLocation();
+  const axiosPrivate                  = useAxiosPrivate();
   const handlePostEvent = async () => {
     let replyData = {};
     replyData.text = replyText;
@@ -172,7 +169,7 @@ justify-content: flex-start;
     margin: 7px;
     margin-left: 62px;
     cursor: pointer;
-    background-color: var(--linkedinBlue2);
+    background-color: #0073b1;
     border-radius: 18px;
     outline: none;
     border: none;

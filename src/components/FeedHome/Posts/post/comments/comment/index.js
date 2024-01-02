@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as fortawesome from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../../hooks/useAxiosPrivate";
 import * as ReplyAuth from "../../../../../../AUth/NewFeedAPI/ReplyAuth";
 import { useNavigate,useLocation } from "react-router-dom";
@@ -9,8 +7,6 @@ import StartCommentReply from "../comment/replies/index";
 import ProfileImage from "../../../../../ProfileImage";
 
 const Comment = ({ data,profileData }) => {
-  const [isLike, setLike]       = useState(data?.liked || false);
-  const [post, setPost]         = useState(data?data:{});
   const [replies, setReplies]   = useState(null);
   const axiosPrivate            = useAxiosPrivate();
   const navigate                = useNavigate();

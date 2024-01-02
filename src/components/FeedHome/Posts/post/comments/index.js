@@ -4,16 +4,12 @@ import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import * as CommentAuth from "../../../../../AUth/NewFeedAPI/CommentAuth";
 import useAxiosPrivate from "../../../../../hooks/useAxiosPrivate";
 import Comment from "../comments/comment/index";
-import { useNavigate,useLocation } from "react-router-dom";
 import ProfileImage from "../../../../ProfileImage";
 import styled from "styled-components";
 
 const StartComments = ({setCommetData,post,comments,profileData}) => {
-  const [newPostPopup, setNewPostPopup]   = useState(false);
   const [commentText, setCommentText]     = useState();
   const axiosPrivate                      = useAxiosPrivate();
-  const navigate                          = useNavigate();
-  const location                          = useLocation();
   const handlePostEvent = async () => {
     let comment = {};
     comment.text = commentText;
@@ -174,7 +170,7 @@ justify-content: flex-start;
     margin: 7px;
     margin-left: 62px;
     cursor: pointer;
-    background-color: var(--linkedinBlue2);
+    background-color: #0073b1;
     border-radius: 18px;
     outline: none;
     border: none;

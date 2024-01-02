@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as fortawesome from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../../../../../../hooks/useAxiosPrivate";
 import * as ReplyAuth from "../../../../../../../../AUth/NewFeedAPI/ReplyAuth";
 import StartReplyOnReply from "../reply/replies";
@@ -9,7 +7,6 @@ import ProfileImage from "../../../../../../../ProfileImage";
 import styled from "styled-components";
 
 const Reply = ({ replyData,profileData }) => {
-  const [isLike, setLike]       = useState(replyData?.liked || false);
   const [reply, setReply]       = useState(replyData?replyData:{});
   const axiosPrivate            = useAxiosPrivate();
   const navigate                = useNavigate();
@@ -136,36 +133,8 @@ const CountArea = styled.div`
 const CommentText = styled.div`
 
 `;
-const Footer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  border-top: 0.1px solid #e2e9df;
-`;
 
-const FooterButton = styled.button`
-  outline: none;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 24px;
-  line-height: 1.5;
-  min-height: 48px;
-  background: transparent;
-  border: none;
-  margin: 4px;
-  font-weight: 600;
-  .like {
-    color: #5292eb;
-  }
-  >svg {
-      margin: 0 4px -3px -2px;
-      font-size: 20px;
-  }
-  >span{
-      font-size: 13px; 
-      margin: 0 4px 0 8px;
-      
-  }
-`;
+
 
 const UserProfile = styled.div`
   width: 42px;

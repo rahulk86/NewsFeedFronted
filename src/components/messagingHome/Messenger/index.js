@@ -4,6 +4,7 @@ import ProfileImage from "../../ProfileImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as fortawesome from "@fortawesome/free-solid-svg-icons";
 import UnreadMessageCount from "../UnreadMessage";
+import MessageTimestamp from "../MessageTimestamp";
 
 const Messenger = ({messenger,setMessenger})=>{
   const options = { hour: 'numeric', minute: '2-digit', hour12: true };
@@ -20,7 +21,8 @@ const Messenger = ({messenger,setMessenger})=>{
                     <span>{messenger.name}</span>
                 </ProfileName>
                 <UnreadMessage>
-                  <MessageTimestamp unreadCount={messenger.unreadMessages} >{new Intl.DateTimeFormat('en-US', options).format(new Date(messenger?.creatAt))}</MessageTimestamp>
+                  {/* <MessageTimestamp unreadCount={messenger.unreadMessages} >{new Intl.DateTimeFormat('en-US', options).format(new Date(messenger?.creatAt))}</MessageTimestamp> */}
+                  <MessageTimestamp unreadCount={messenger.unreadMessages} createdAt={messenger?.creatAt} />
                   <UnreadMessageCount unreadCount={messenger.unreadMessages} />
                 </UnreadMessage>
             </GroupProfileInfo>
@@ -29,20 +31,20 @@ const Messenger = ({messenger,setMessenger})=>{
     );
 };
 
-const MessageTimestamp = styled.div`
-  font-size: 0.8em;
-  padding: 3px;
-  ${(props) =>
-    props.unreadCount
-      ? css`
-          color:  #88d988;
-      `
-      : css`
-         color: #888;
-      `
-    }
-  align-self: flex-end;
-`;
+// const MessageTimestamp = styled.div`
+//   font-size: 0.8em;
+//   padding: 3px;
+//   ${(props) =>
+//     props.unreadCount
+//       ? css`
+//           color:  #88d988;
+//       `
+//       : css`
+//          color: #888;
+//       `
+//     }
+//   align-self: flex-end;
+// `;
 
 const Container = styled.div`
     max-width: 100%;
