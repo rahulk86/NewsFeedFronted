@@ -1,5 +1,5 @@
 import React ,{ useEffect,useState } from "react";
-import LinkedinLogo from "./linkedin.png";
+import NewFeedLogo from "../../../NewFeedLogo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import *  as fortawesome  from "@fortawesome/free-solid-svg-icons";
 import  SignOut from "../../signout/index";
@@ -47,7 +47,7 @@ const Header = ({profileData}) => {
 
         <Logo>
           <a href="/home">
-            <img className="linkedin-logo" src={LinkedinLogo} alt="LinkedinLogo" />
+            <NewFeedLogo/>
           </a>
         </Logo>
 
@@ -68,6 +68,11 @@ const Header = ({profileData}) => {
 
         <SmallMediaNavList active={"/messaging"==location.pathname}  isSmallMedia={true} onClick={navigateMessaging}>
           <NavListItem>
+           <UnreadMessageCount>
+                  {unreadMessenger > 0 && (
+                    <CountBadge>{unreadMessenger}</CountBadge>
+                  )}
+            </UnreadMessageCount>
             <FontAwesomeIcon icon={fortawesome.faMessage} /> 
             <span>Messaging</span>
           </NavListItem>
@@ -208,6 +213,9 @@ const Logo = styled.span`
   font-size: 0px;
   @media (max-width: 768px) {
     display: none;
+  }
+  img{
+    width: 110px;
   }
 `;
 

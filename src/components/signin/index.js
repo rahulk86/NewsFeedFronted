@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import {Link, useNavigate,useLocation } from "react-router-dom";
 import {toast } from 'react-toastify';
 import styled,{css} from "styled-components";
+import NewFeedLogo from '../../NewFeedLogo';
 function SignIn() {
   const errRef                          = useRef();
   const userRef                         = useRef();
@@ -88,7 +89,7 @@ function SignIn() {
   <Container>
     <Nav>
       <NavBoady>
-      <NavImage src="/images/login-logo.svg" alt=""/>
+         <NewFeedLogo/>
       </NavBoady>
     </Nav>
 
@@ -188,7 +189,7 @@ const ForgetPassword = styled.span`
 const ForgetPasswordLink = styled.a`
 `;
 export const NavImage = styled.img`
-
+  width: 200px;
 `;
 
 export const NavBoady = styled.a`

@@ -2,13 +2,14 @@ import React from "react";
 import {Link } from "react-router-dom";
 import newFeedUrl from '../../AUth/NewFeedAPI/NewFeedUrl';
 import "./index.css";
+import NewFeedLogo from "../../NewFeedLogo";
 
 const Home = (props) => {
   return (
     <div class="container">
     <nav class="nav">
       <a href="/">
-        <img src="/images/login-logo.svg" alt="LinkedIn Logo" />
+        <NewFeedLogo/>
       </a>
       <div>
         <Link  className="join" to="/signup">Join now</Link>

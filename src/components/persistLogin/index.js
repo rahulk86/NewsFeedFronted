@@ -3,6 +3,7 @@ import React,{ useState, useEffect } from "react";
 import useRefreshToken from '../../hooks/useRefreshToken';
 import useAuth from '../../hooks/useAuth';
 import styled , { keyframes } from "styled-components";
+import NewFeedLogo from "../../NewFeedLogo";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +37,7 @@ const PersistLogin = () => {
             {isLoading?
               <Container>
                 <Containt>
-                 <img src="/images/login-logo.svg" alt="Loading" />
+                   <NewFeedLogo />
                  <LoadingBar />
                 </Containt>
                </Container>
@@ -57,9 +58,8 @@ const Container = styled.div`
 const Containt = styled.div`
  position: relative;
     img{
-        width: 100%;
-        max-width: 250px;
-        max-height: 100%;
+       width: 70%;
+       max-width: 250px;
     }
 
 `;

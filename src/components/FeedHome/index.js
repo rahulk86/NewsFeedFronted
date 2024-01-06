@@ -13,12 +13,11 @@ import styled from "styled-components";
 
 
 const FeedHome = (props) => {
-  const [postData, setPostData]               = useState(null);
-  const [profileData, setProfileData]         = useState();
-  const [unreadMessenger, setUnreadMessenger] = useState(0);
-  const navigate                              = useNavigate();
-  const axiosPrivate                          = useAxiosPrivate();
-  const location                              = useLocation();
+  const [postData, setPostData]       = useState(null);
+  const [profileData, setProfileData] = useState();
+  const navigate                      = useNavigate();
+  const axiosPrivate                  = useAxiosPrivate();
+  const location                      = useLocation();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
@@ -26,12 +25,10 @@ const FeedHome = (props) => {
       try{
         const response            = await postAuth.getPosts(axiosPrivate,controller);
         const profileResponse     = await profileAuth.getProfile(axiosPrivate,controller);
-        const unreadCountResponse = await messagingAuth.getUnreadMessenger(axiosPrivate);
 
         if(response.data && profileResponse.data){
           if(isMounted){
             setPostData(response.data) ;
-            unreadCountResponse.data && setUnreadMessenger(unreadCountResponse.data) ;
             setProfileData(profileResponse.data);
           }
         }
@@ -54,7 +51,7 @@ const FeedHome = (props) => {
 
   return (
     <Container>
-      <Header profileData = {profileData} unreadMessenger={unreadMessenger} />
+      <Header profileData = {profileData} />
       <Layout>
         <Leftside profileData={profileData} />
         {postData && <Posts profileData = {profileData} data={postData} setPostData = {setPostData} />}

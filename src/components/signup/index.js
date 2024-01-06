@@ -21,6 +21,7 @@ import {Container,
 import styled ,{ css }  from "styled-components";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NewFeedLogo from '../../NewFeedLogo';
 
 
 const USER_EMAILORPHONE_REGEX = /^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|(?:\+?\d{1,4}[-.\s]?\d{1,15}))$/;
@@ -112,7 +113,7 @@ function Signup(props) {
   <Container>
     <Nav>
       <NavBoady>
-        <NavImage src="/images/login-logo.svg" alt=""/>
+        <NewFeedLogo/>
       </NavBoady>
     </Nav>
 
