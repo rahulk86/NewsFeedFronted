@@ -11,6 +11,9 @@ import RequireAuth from "../AUth/RequireAuth";
 import Unauthorized from "../AUth/Unauthorized";
 import Layout from "../components/layout/index";
 import MessagingHome from "../components/messagingHome";
+import EmailVerification from "../components/EmailVerification";
+import RequestResetLink from "../components/RequestResetLink";
+import ResetPassword from "../components/ResetPassword";
 
 
 const ROLES = {
@@ -28,6 +31,9 @@ const RouterComponent = () => (
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/oauth2/redirect" element={<SignIn />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="/register/verifyEmail" element={<EmailVerification/>} />
+        <Route path="/requestResetLink" element={<RequestResetLink/>} />
+        <Route path="/resetPassword" element={<ResetPassword/>} />
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>

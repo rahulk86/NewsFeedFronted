@@ -51,7 +51,7 @@ const handleChangeMessage = async (e)=>{
   updateTime(messenger);
 };
 
-useEffect( ()  => {},[messengerDate]);
+useEffect( ()  => {},[message]);
 
 useEffect( ()  => {
     (async ()=>{
@@ -67,7 +67,7 @@ useEffect( ()  => {
        
       }
     })();
-  }, []);
+  }, [messenger]);
 
     return (
         <Container>

@@ -136,9 +136,8 @@ function SignIn() {
 
           <ForgetPassword>
             <ForgetPasswordLink
-                href="/checkpoint/rp/request-password-reset" 
                 data-cie-control-urn="forgot-password-btn">
-                  Forgot password?
+                  <NavigateLink to="/requestResetLink" >Forgot password?</NavigateLink>
             </ForgetPasswordLink>
           </ForgetPassword>
 
@@ -160,7 +159,7 @@ function SignIn() {
 
 export const Container = styled.div`
   max-width: 100%;
-  height: 100%;
+  height: 100vh;
   background: #f5f5f5;
   @media (max-width: 900px) {
     background: none;
@@ -359,7 +358,7 @@ export const Navigate = styled.p`
   font-size: 18px;
 `
 export const NavigateLink = styled(Link)`
-  color: var(--linkedinBlue1);
+  color: #0073b1;
   font-family: system-ui;
   cursor: pointer;
   font-size: 18px;

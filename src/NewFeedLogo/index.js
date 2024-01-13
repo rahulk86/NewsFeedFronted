@@ -7,5 +7,9 @@ function NewFeedLogo(props) {
 }
 const NavImage = styled.img`
   width: 200px;
+  @media (max-width: 768px) {
+    width: 110px;
+  }
+  
 `;
 export default NewFeedLogo;

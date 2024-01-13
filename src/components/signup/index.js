@@ -48,22 +48,17 @@ function Signup(props) {
   const navigate                                    = useNavigate();
   const location                                    = useLocation();
     
-  useEffect(() => {
-    userRef.current.focus();
-  }, [])
 
   useEffect(() => {
     setValidEmailOrPhone(USER_EMAILORPHONE_REGEX.test(emailOrPhone));
+    setErrMsg('');
   }, [emailOrPhone])
 
   useEffect(() => {
     setValidPassword(PASSWORD_REGEX.test(password));
     setValidMatchPassword(password === matchPassword);
+    setErrMsg('');
   }, [password, matchPassword])
-
-  useEffect(() => {
-  setErrMsg('');
-  }, [emailOrPhone, password, matchPassword])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -120,7 +115,7 @@ function Signup(props) {
     <BigMedidaSubtitle>Make the most of your professional life</BigMedidaSubtitle>
     <SmallMedidaSubtitle>Join Linkdin Now - it's free!</SmallMedidaSubtitle>
     <Content>
-    <Errmsg ref={errRef} enable={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
+    <Errmsg ref={errRef} enabled={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
       <Form onSubmit={handleSubmit} >
           <FormInner>
             <AuthInputs>

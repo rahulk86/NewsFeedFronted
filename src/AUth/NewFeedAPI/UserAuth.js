@@ -59,3 +59,35 @@ export const createNewUser =async (email,password,username)=>{
       throw error;
     }
   }
+
+  export const verifyEmail =async (token)=>{
+    try {
+      return  await axios.get(urls.verifyEmail+'?token='+token);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  export const verifyEmailByCode =async (code)=>{
+    try {
+      return  await axios.get(urls.verifyEmailByCode+'?code='+code);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  export const forgetPassword =async (data)=>{
+    try {
+      return  await axios.post(urls.forgetPassword,data);
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  export const passwordResetEmail =async (email)=>{
+    try {
+      return  await axios.post(urls.passwordResetEmail+'?email='+email);
+    } catch (error) {
+      throw error;
+    }
+  }

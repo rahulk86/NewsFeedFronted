@@ -35,12 +35,9 @@ const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axi
           client.subscribe(urls.receiveUpdateTime + `/${messenger.conversationId}`, receiveUpdateTime);
         },
         async (error) => {
-          if (error?.response?.status === 401) {
+          if (error?.headers?.message) {
             const newAccessToken = await refresh();
-            client.config.headers['Authorization'] = `Bearer ${newAccessToken}`;
-            client.reconnect({}, () => {
-              console.log('WebSocket reconnected after token refresh');
-            });
+            auth.accessToken = newAccessToken;
           } else {
             console.error('WebSocket connection error:', error);
           }
@@ -57,7 +54,7 @@ const useWebSocket = (messenger,recieveMessageToSubscriber,receiveUpdateTime,axi
         console.log('WebSocket disconnected');
       }
     };
-  }, []);
+  }, [messenger,auth.accessToken]);
 
   const sendMessage = (conversationId,message) => {
     if (isConnected) {

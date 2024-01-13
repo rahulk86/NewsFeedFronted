@@ -45,7 +45,7 @@ const StartGroupConversation = ({messenger,setMessenger})=>{
        
       }
     })();
-  }, []);
+  }, [messenger]);
 
     return (
         <Container>

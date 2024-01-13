@@ -1,9 +1,9 @@
-// const baseURL               = "http://54.253.132.48:8086";
-// const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
-const baseURL               = "http://localhost:8086";
+const baseURL               = "http://54.253.132.48:8086";
+ const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
+// const baseURL               = "http://localhost:8086";
 // const baseURL               = "http://192.168.29.228:8086";
 const webSocketURL          = `${baseURL}/wb`;
-const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
+// const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
 
 const login                 = "/api/users/login";
 const oauth2                = "/api/users/oauth2";
@@ -11,6 +11,12 @@ const signout               = "/api/usersAuth/signout";
 const refresh               = "/api/users/refresh";
 const signUp                = "/api/users/signup";
 const register              = "/api/users/register";
+const verifyEmail           = "/api/users/verify/email";
+const verifyEmailByCode     = "/api/users/verify/emailByCode";
+const recievSuccess         = "/topic/emailVerificationSuccess";
+const sendSuccess           = "/api/users/emailVerificationSuccess";
+const forgetPassword        = "/api/users/forgetPassword";
+const passwordResetEmail    = "/api/users/passwordResetEmail";
 
 
 const createComment         = "/api/users/post/comment/create";
@@ -36,6 +42,7 @@ const groupConversation     = "/topic/GroupConversation";
 const groupSendMessage      = "/api/messenger/sendGroupMessage";
 const receiveUpdateTime     = "/topic/receiveUpdateTime";
 const updateTime            = "/api/messenger/updateTime";
+const emailConfirmation     = "/register/emailConfirmation";
 
 const getMessengers         = "/api/messenger/get";
 const unreadCount           = "/api/messenger/unreadCount";
@@ -57,7 +64,12 @@ export default {
     signout,
     refresh,
     signUp,
+    recievSuccess,
+    forgetPassword,
+    passwordResetEmail,
+    sendSuccess,
     uploadImage,
+    verifyEmailByCode,
     register,
     createPost,
     allPost,
@@ -80,6 +92,8 @@ export default {
     groupSendMessage,
     createGroup,
     getGroupMessage,
+    verifyEmail,
+    emailConfirmation,
     updateMessengerTime,
     receiveUpdateTime,
     updateTime,
