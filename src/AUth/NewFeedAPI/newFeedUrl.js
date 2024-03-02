@@ -1,13 +1,9 @@
-const baseURL               = "http://54.253.132.48:8086";
- const Oauth2RedirectUri     = "http://newfeedrecatclone.s3-website-us-east-1.amazonaws.com/oauth2/redirect";
-// const baseURL               = "http://localhost:8086";
-// const baseURL               = "http://192.168.29.228:8086";
+const baseURL               = window.location.protocol + "//" + window.location.host;
 const webSocketURL          = `${baseURL}/wb`;
-// const Oauth2RedirectUri     = "http://localhost:3000/oauth2/redirect";
+const Oauth2RedirectUri     = `${baseURL}/oauth2/redirect`;
 
 const login                 = "/api/users/login";
-const oauth2                = "/api/users/oauth2";
-const signout               = "/api/usersAuth/signout";
+const signout               = "/api/users/signout";
 const refresh               = "/api/users/refresh";
 const signUp                = "/api/users/signup";
 const register              = "/api/users/register";
@@ -60,7 +56,6 @@ export default {
     getProfile,
     getAllProfile,
     login,
-    oauth2,
     signout,
     refresh,
     signUp,

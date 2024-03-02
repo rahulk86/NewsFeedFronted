@@ -21,19 +21,6 @@ export const signInWithEmailAndPassword =async (email,password)=>{
     }
   }
 
-  export const oauth2 =async (token)=>{
-    try {
-      const config = { 
-                    headers: {
-                    'Authorization': `Bearer ${token}`
-                    }
-                 };
-      const data = {};
-      return  await axios.post(urls.oauth2,data, config);
-    } catch (error) {
-      throw error;
-    }
-  }
 
   export const signUpWithEmailAndPassword =async (email,password)=>{
     let data       = {};

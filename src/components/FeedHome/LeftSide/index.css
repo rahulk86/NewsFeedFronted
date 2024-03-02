@@ -30,7 +30,7 @@
   
   /* CardBackground */
   .leftside .card-background {
-    background: url("/images/card-bg.svg");
+    background: url("/home/images/card-bg.svg");
     background-position: center;
     background-size: 462px;
     height: 54px;

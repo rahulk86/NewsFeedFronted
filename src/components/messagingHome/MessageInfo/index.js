@@ -58,7 +58,7 @@ const MessageInfo = ({profileData,setMessenger,setGroupState,setCurrentState,cur
                <NavList onClick={()=>{setCurrentState('status')}} >
                  <NavListItem>
                   <NavBoady>
-                   <NavImage src="/images/whatstatus.png" alt=""/>
+                   <NavImage src="/home/images/whatstatus.png" alt=""/>
                   </NavBoady>
                  </NavListItem>
                </NavList>

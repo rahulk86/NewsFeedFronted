@@ -4,11 +4,13 @@ import useAuth from '../../hooks/useAuth';
 import {Link, useNavigate,useLocation } from "react-router-dom";
 import {toast } from 'react-toastify';
 import styled,{css} from "styled-components";
+import useRefreshToken from '../../hooks/useRefreshToken';
 import NewFeedLogo from '../../NewFeedLogo';
+import ErrorMessage from '../ErrorMessage';
 function SignIn() {
-  const errRef                          = useRef();
   const userRef                         = useRef();
   const navigate                        = useNavigate();
+  const refresh                         = useRefreshToken();
   const location                        = useLocation();
   const { setAuth }                     = useAuth(); 
   const [emailOrPhone, setEmailOrPhone] = useState('');
@@ -18,19 +20,10 @@ function SignIn() {
   const from = location.state?.from?.pathname || "/feed";
   useEffect(  () => {
 
-    let  getUrlParameter = function(name) {
-      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-
-      var results = regex.exec(location.search);
-      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-
     if(location.search){
-      let token = getUrlParameter('token');
       try{
-        let respnse =   userAuth.oauth2(token);
-        responsehandler(respnse);
+        refresh();
+        navigate(from, { replace: true });
       }
       catch (error){
         errorhandler(error);
@@ -50,7 +43,7 @@ function SignIn() {
 
 
   let responsehandler = function(response){
-    toast.success("Signed In to Linkdin")
+    toast.success("Signed In to NewsFeed")
     const accessToken = response?.data?.accessToken;
     const roles       = response?.data?.roles;
     const eamil       = emailOrPhone;
@@ -70,7 +63,6 @@ function SignIn() {
     } else {
       setErrMsg('Login Failed');
     }
-    errRef.current.focus();
   }
 
 
@@ -94,7 +86,7 @@ function SignIn() {
     </Nav>
 
     <Content>
-      <Errmsg ref={errRef} enabled={errMsg} aria-live="assertive">{errMsg}</Errmsg>
+     {errMsg&&<ErrorMessage message={errMsg} onClose = {(e) => setErrMsg("")} />}   
       <Form onSubmit={handleSubmit} >
         <FormInner>
           <Header>
@@ -148,7 +140,7 @@ function SignIn() {
       <HrText data-content="or" />
       <Auth2OContainer>
           <Navigate>
-            New to LinkedIn?{" "}
+            New to NewsFeed?{" "}
             <NavigateLink to="/signup" >Join now</NavigateLink>
          </Navigate>
       </Auth2OContainer>

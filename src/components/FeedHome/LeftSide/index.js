@@ -16,7 +16,7 @@ const Leftside = ({profileData}) => {
               {
                 profileData?.image
                 ?<img src={profileData.image.url} alt="Uploaded"/>
-                :<img src="/images/photo.svg" alt="Uploaded"/>
+                :<img src="/home/images/photo.svg" alt="Uploaded"/>
               }
             </UserProfile>
             <div class="link">{profileData && 'Welcome,'+profileData.user.name +'!'}</div>
@@ -33,12 +33,12 @@ const Leftside = ({profileData}) => {
               <span>Connections</span>
               <span>Grow your network</span>
             </div>
-            <img src="/images/widget-icon.svg" alt="" />
+            <img src="/home/images/widget-icon.svg" alt="" />
           </a>
         </div>
         <a class="item">
           <span>
-            <img src="/images/item-icon.svg" alt="" />
+            <img src="/home/images/item-icon.svg" alt="" />
             My Items
           </span>
         </a>
@@ -49,7 +49,7 @@ const Leftside = ({profileData}) => {
           <span>Groups</span>
         </a>
         <a>
-          <span>Events <img src="/images/plus-icon.svg" alt="" /></span>
+          <span>Events <img src="/home/images/plus-icon.svg" alt="" /></span>
         </a>
         <a>
           <span>Follow Hashtags</span>

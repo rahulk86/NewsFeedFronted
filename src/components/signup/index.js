@@ -22,6 +22,7 @@ import styled ,{ css }  from "styled-components";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewFeedLogo from '../../NewFeedLogo';
+import ErrorMessage from '../ErrorMessage';
 
 
 const USER_EMAILORPHONE_REGEX = /^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|(?:\+?\d{1,4}[-.\s]?\d{1,15}))$/;
@@ -29,7 +30,6 @@ const PASSWORD_REGEX = /^.{6,}$/;
 
 function Signup(props) {
   const userRef                                     = useRef();
-  const errRef                                      = useRef();
   const [emailOrPhone, setEmailOrPhone]             = useState('');
   const [validEmailOrPhone, setValidEmailOrPhone]   = useState(false);
   const [emailOrPhoneFocus, setEmailOrPhoneFocus]   = useState(false); 
@@ -101,7 +101,6 @@ function Signup(props) {
     } else {
       setErrMsg('Registration Failed')
     }
-    errRef.current.focus();
   };
 
   return (
@@ -113,9 +112,9 @@ function Signup(props) {
     </Nav>
 
     <BigMedidaSubtitle>Make the most of your professional life</BigMedidaSubtitle>
-    <SmallMedidaSubtitle>Join Linkdin Now - it's free!</SmallMedidaSubtitle>
+    <SmallMedidaSubtitle>Join NewsFeed Now - it's free!</SmallMedidaSubtitle>
     <Content>
-    <Errmsg ref={errRef} enabled={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
+      {errMsg&&<ErrorMessage message={errMsg} onClose = {(e) => setErrMsg("")} />}         
       <Form onSubmit={handleSubmit} >
           <FormInner>
             <AuthInputs>
@@ -228,8 +227,8 @@ function Signup(props) {
 
       <Auth2OContainer>
         <Navigate>
-          Already on LinkedIn?{" "}
-          <NavigateLink to="/signIn">Sign in</NavigateLink>
+          Already on NewsFeed?{" "}
+          <NavigateLink to="/SignIn">Sign in</NavigateLink>
         </Navigate>
       </Auth2OContainer>
 

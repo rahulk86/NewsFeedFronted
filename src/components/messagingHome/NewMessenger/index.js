@@ -19,7 +19,7 @@ const NewMessenger = ({profileData,setMessenger})=>{
               setMessenger(response.data);
             }
             else{
-              navigate('/signIn', { state: { from: location }, replace: true });
+              navigate('/SignIn', { state: { from: location }, replace: true });
             }
     }
 

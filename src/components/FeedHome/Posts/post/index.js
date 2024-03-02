@@ -27,11 +27,11 @@ const Post = ({ data,profileData }) => {
         }
         else{
           console.error('Error updating like status:');
-          navigate('/signIn', { state: { from: location }, replace: true });
+          navigate('/SignIn', { state: { from: location }, replace: true });
         }
       } catch (error) {
         console.error('Error updating like status:', error);
-        navigate('/signIn', { state: { from: location }, replace: true });
+        navigate('/SignIn', { state: { from: location }, replace: true });
       }
     };
 
@@ -44,11 +44,11 @@ const Post = ({ data,profileData }) => {
         }
         else{
           console.error('Error loading comment:');
-          navigate('/signIn', { state: { from: location }, replace: true });
+          navigate('/SignIn', { state: { from: location }, replace: true });
         }
       } catch (error) {
         console.error('Error loading comment:', error);
-        navigate('/signIn', { state: { from: location }, replace: true });
+        navigate('/SignIn', { state: { from: location }, replace: true });
       }
     };
 

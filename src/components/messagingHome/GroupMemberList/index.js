@@ -37,11 +37,11 @@ const GroupMemberList = ({profileData,setIsNewGroup,setGroupMember})=>{
               }
             }
             else{
-              navigate('/signIn', { state: { from: location }, replace: true });
+              navigate('/SignIn', { state: { from: location }, replace: true });
             }
           }
           catch(err){
-            navigate('/signIn', { state: { from: location }, replace: true });
+            navigate('/SignIn', { state: { from: location }, replace: true });
           }
         };
     

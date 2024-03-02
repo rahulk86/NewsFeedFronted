@@ -69,6 +69,9 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   padding: 8px 16px 0px 16px;
+  @media (max-width: 900px) {
+          display: none;
+  }
 `;
 
 const CommentInput = styled.div`

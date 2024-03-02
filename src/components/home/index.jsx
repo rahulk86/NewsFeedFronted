@@ -19,11 +19,11 @@ const Home = (props) => {
     <section class="section">
       <div class="hero">
         <h1>Welcome to your professional community</h1>
-        <img src="/images/login-hero.svg" alt="Login Hero" />
+        <img src="/home/images/login-hero.svg" alt="Login Hero" />
       </div>
       <div class="form">
         <a class="google" href={newFeedUrl.googleAuthUrl} >
-          <img src="/images/google.svg" alt="Google Logo" />
+          <img src="/home/images/google.svg" alt="Google Logo" />
           Sign in with Google
         </a>
       </div>

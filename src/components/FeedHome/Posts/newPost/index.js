@@ -31,11 +31,11 @@ const NewPost = ({ funVal ,profileData}) => {
         }
         else{
           console.error('Error updating post:');
-          navigate('/signIn', { state: { from: location }, replace: true });
+          navigate('/SignIn', { state: { from: location }, replace: true });
         }
       } catch (error) {
         console.error('Error updating post:', error);
-        navigate('/signIn', { state: { from: location }, replace: true });
+        navigate('/SignIn', { state: { from: location }, replace: true });
       }
     };
 

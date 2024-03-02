@@ -22,11 +22,11 @@ const Reply = ({ replyData,profileData }) => {
       }
       else{
         console.error('Error loading Reply:');
-        navigate('/signIn', { state: { from: location }, replace: true });
+        navigate('/SignIn', { state: { from: location }, replace: true });
       }
     } catch (error) {
       console.error('Error loading Reply:', error);
-      navigate('/signIn', { state: { from: location }, replace: true });
+      navigate('/SignIn', { state: { from: location }, replace: true });
     }
   };
 
@@ -99,6 +99,9 @@ const Profile = styled.div`
     align-items: center;
     box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
   }
+  @media (max-width: 900px) {
+    margin: 4px;
+  }
 `;
 
 const CommentInfo = styled.div`
@@ -106,10 +109,16 @@ const CommentInfo = styled.div`
   border-radius: 0px 7px 7px 7px;
   width: auto;
   padding: 9px;
+  @media (max-width: 900px) {
+    width: auto;
+  }
 `;
 const CommentFeed = styled.div`
   padding-left: 10px;
   width: 85%;
+  @media (max-width: 900px) {
+    padding-right : unset;
+  }
 `;
 
 const CountArea = styled.div`

@@ -142,17 +142,7 @@ const Header = ({profileData}) => {
               </User>
             </NavList>
 
-            <NavList isSmallMedia={false}>
-            <Work>
-              <a>
-                <img src="/images/nav-work.svg" alt="" />
-                <span>
-                  Work
-                  <img src="/images/down-icon.svg" alt="" />
-                </span>
-              </a>
-            </Work>
-            </NavList>
+
           </NavListWrap>
         </Nav>
       </Content>
@@ -215,6 +205,7 @@ const Logo = styled.span`
     display: none;
   }
   img{
+    height: auto;
     width: 110px;
   }
 `;
@@ -270,7 +261,6 @@ const SearchIcon = styled.div`
 const Nav = styled.nav`
   margin-left: auto;
   display: block;
-  width: 100%;
   max-width: 779px;
   height: 100%;
   margin-top: 3px;

@@ -28,7 +28,7 @@ const RouterComponent = () => (
         <Route path="/" element={<Home />} />
         <Route path="/signUp" element={ <SignUp />} />
         <Route path="/register" element={ <SignupWithSecurityCheck />} />
-        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/SignIn" element={<SignIn />} />
         <Route path="/oauth2/redirect" element={<SignIn />} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="/register/verifyEmail" element={<EmailVerification/>} />

@@ -27,11 +27,11 @@ const Messengers = ({setMessenger,setCurrentState})=>{
               }
             }
             else{
-              navigate('/signIn', { state: { from: location }, replace: true });
+              navigate('/SignIn', { state: { from: location }, replace: true });
             }
           }
           catch(err){
-            navigate('/signIn', { state: { from: location }, replace: true });
+            navigate('/SignIn', { state: { from: location }, replace: true });
           }
         };
     

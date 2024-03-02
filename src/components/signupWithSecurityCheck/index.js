@@ -24,12 +24,11 @@ import {  BigMedidaSubtitle,
           Instructions
         }                                  from "../signup";
 import NewFeedLogo from '../../NewFeedLogo';
+import ErrorMessage from '../ErrorMessage';
 
 function SignupWithSecurityCheck() {
   const verifyCodRef                    = useRef();
   const userRef                         = useRef();
-  const errRef                          = useRef();
-  const verifyCodeErrRef                = useRef();
   const [firstName, setFirstName]       = useState('');
   const [lastName, setLastName]         = useState('');
   const [errMsg, setErrMsg]             = useState('');
@@ -108,7 +107,6 @@ useEffect(() => {
     } else {
       setErrMsg('Registration Failed')
     }
-    errRef.current.focus();
   }
   let verifyCodeErrorhandler = function(err){
     if (!err?.response) {
@@ -120,7 +118,6 @@ useEffect(() => {
     } else {
       setErrMsg('Registration Failed')
     }
-    verifyCodeErrRef.current.focus();
   }
 
   const handleSubmit = async (event) => {
@@ -167,10 +164,10 @@ useEffect(() => {
       </NavBoady>
     </Nav>
     <BigMedidaSubtitle>Make the most of your professional life</BigMedidaSubtitle>
-    <SmallMedidaSubtitle>Join Linkdin Now - it's free!</SmallMedidaSubtitle>
+    <SmallMedidaSubtitle>Join NewsFeed Now - it's free!</SmallMedidaSubtitle>
     {!success ?
-    <Content>
-    <Errmsg ref={errRef} enabled={errMsg} aria-live="assertive">{errMsg}</Errmsg>          
+    <Content>  
+    {errMsg&&<ErrorMessage message={errMsg} onClose = {(e) => setErrMsg("")} />}        
       <Form onSubmit={handleContinue} >
         <FormInner>
           <AuthInputs>
@@ -211,7 +208,7 @@ useEffect(() => {
         <Heading>Code Confirmation</Heading>
         <Subheading>An email has been sent to your address with a 6-digit confirmation code.</Subheading>
       </Header>
-      <Errmsg ref={verifyCodeErrRef} enabled={errMsg} aria-live="assertive">{errMsg}</Errmsg>  
+      {errMsg&&<ErrorMessage message={errMsg} onClose = {(e) => setErrMsg("")} />}   
       <Form onSubmit={handleSubmit} >
         <CodeConfirmationInput
           type="text"
